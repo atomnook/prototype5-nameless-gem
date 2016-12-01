@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package proto;
+
+message CharacterId {
+  string id = 1;
+}
+
+message Character {
+  CharacterId id = 1;
+  string name = 2;
+}
