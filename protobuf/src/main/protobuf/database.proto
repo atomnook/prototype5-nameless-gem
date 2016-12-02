@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package protobuf;
+
+import "character.proto";
+
+message Database {
+  repeated Character characters = 1;
+}

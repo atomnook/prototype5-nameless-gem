@@ -1,4 +1,5 @@
 .idea/
+domain/target/
 project/target/
-proto/target/
+protobuf/target/
 target/
