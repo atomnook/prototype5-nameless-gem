@@ -1,0 +1,11 @@
+@(url: play.api.mvc.Call)(body: Html)
+
+fetch('@url', {
+    method: 'POST',
+    headers: {'Content-Type': 'text/json'},
+    body: JSON.stringify(@(body))
+}).then(function(res) {
+    if (res.status == 200) {
+        window.location.reload(true);
+    }
+});

@@ -3,3 +3,5 @@ domain/target/
 project/target/
 protobuf/target/
 target/
+tool/target/
+chromedriver

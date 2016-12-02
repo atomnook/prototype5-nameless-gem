@@ -1,0 +1,13 @@
+# Main
+GET /   controllers.MainController.index
+GET /download/database    controllers.MainController.download
+
+# Characters
+GET /characters   controllers.CharacterController.list
+GET /characters/:id   controllers.CharacterController.get(id: String)
+
+POST /characters.json   controllers.CharacterController.set
+DELETE /characters/:id.json   controllers.CharacterController.delete(id: String)
+
+# Assets
+GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")
