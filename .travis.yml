@@ -1,3 +1,7 @@
+sudo: required
+
+dist: trusty
+
 language: scala
 
 branches:
@@ -5,10 +9,21 @@ branches:
     - master
 
 scala:
-   - 2.12.0
+   - 2.11.8
 
 jdk:
   - oraclejdk8
+
+before_script:
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - sudo apt-get update
+  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo dpkg -i google-chrome*.deb
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - wget https://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
 
 script:
    - sbt ++$TRAVIS_SCALA_VERSION test

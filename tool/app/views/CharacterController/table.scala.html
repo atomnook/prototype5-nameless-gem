@@ -1,0 +1,19 @@
+@(values: List[protobuf.Character])(html: Html)
+
+<table class="table table-striped">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th></th>
+    </tr>
+
+    @html
+
+    @for(value <- values) {
+        <tr>
+            <td><a href="@routes.CharacterController.get(value.getId.id)">@value.getId.id</a></td>
+            <td>@value.name</td>
+            <td></td>
+        </tr>
+    }
+</table>

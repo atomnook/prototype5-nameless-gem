@@ -1,0 +1,7 @@
+@(url: play.api.mvc.Call)
+
+fetch('@url', {method: 'DELETE'}).then(function(res) {
+    if (res.status == 200) {
+        window.location.reload(true);
+    }
+});
