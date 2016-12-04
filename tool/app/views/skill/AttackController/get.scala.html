@@ -1,0 +1,61 @@
+@(attack: protobuf.skill.Attack)
+
+@Pages.main {
+    @Pages.row1 {
+        @table(attack :: Nil) {
+            <tr>
+                <td></td>
+                <td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range, default = attack.range.value)</td>
+                <td>@Components.number(id = "tp", getter = "tpValue", default = attack.tp)</td>
+                <td>@Components.number(id = "atk", getter = "atkValue", default = attack.atk)</td>
+                <td>@Components.number(id = "spd", getter = "spdValue", default = attack.spd)</td>
+                <td>@Components.number(id = "hit", getter = "hitValue", default = attack.hit)</td>
+                <td>
+                    @Apis.button.update(controllers.skill.routes.AttackController.set) {
+                        {
+                            'name': '@attack.name.name',
+                            'range': rangeValue(),
+                            'tp': tpValue(),
+                            'atk': atkValue(),
+                            'spd': spdValue(),
+                            'hit': hitValue()
+                        }
+                    }
+                </td>
+            </tr>
+
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.Name)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Apis.button.copy(controllers.skill.routes.AttackController.set) {
+                        {
+                            'name': nameValue(),
+                            'range': rangeValue(),
+                            'tp': tpValue(),
+                            'atk': atkValue(),
+                            'spd': spdValue(),
+                            'hit': hitValue()
+                        }
+                    }
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Apis.button.delete(controllers.skill.routes.AttackController.delete(attack.name.name))
+                </td>
+            </tr>
+        }
+    }
+}

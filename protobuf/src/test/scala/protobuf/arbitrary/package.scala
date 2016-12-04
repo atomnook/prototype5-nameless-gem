@@ -4,8 +4,11 @@ import com.trueaccord.scalapb.{GeneratedEnum, GeneratedEnumCompanion}
 import org.scalacheck.{Arbitrary, Gen}
 import protobuf.entity.Entity
 import protobuf.item.Equipment
+import protobuf.skill.{Attack, Range}
 
 package object arbitrary {
+  private[this] val positive = Gen.chooseNum(0, Int.MaxValue)
+
   private[this] def enum[A <: GeneratedEnum](c: GeneratedEnumCompanion[A]): Arbitrary[A] = Arbitrary(Gen.oneOf(c.values))
 
   implicit val character: Arbitrary[Character] = {
@@ -21,13 +24,26 @@ package object arbitrary {
     Arbitrary {
       for {
         name <- enum(Name).arbitrary
-        price <- Gen.chooseNum(0, Int.MaxValue)
-        atk <- Gen.chooseNum(0, Int.MaxValue)
-        def_ <- Gen.chooseNum(0, Int.MaxValue)
-        mat <- Gen.chooseNum(0, Int.MaxValue)
-        mdf <- Gen.chooseNum(0, Int.MaxValue)
+        price <- positive
+        atk <- positive
+        def_ <- positive
+        mat <- positive
+        mdf <- positive
       } yield Equipment().update(
         _.name := name, _.price := price, _.atk := atk, _.`def` := def_, _.mat := mat, _.mdf := mdf)
+    }
+  }
+
+  implicit val attack: Arbitrary[Attack] = {
+    Arbitrary {
+      for {
+        name <- enum(Name).arbitrary
+        range <- enum(Range).arbitrary
+        tp <- positive
+        atk <- positive
+        spd <- positive
+        hit <- positive
+      } yield Attack().update(_.name := name, _.range := range, _.tp := tp, _.atk := atk, _.spd := spd, _.hit := hit)
     }
   }
 

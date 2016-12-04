@@ -4,9 +4,12 @@ package protobuf;
 
 import "character.proto";
 import "item/equipment.proto";
+import "skill/attack.proto";
 
 message Database {
   repeated Character characters = 1;
 
   repeated item.Equipment equipments = 2;
+
+  repeated skill.Attack attacks = 3;
 }

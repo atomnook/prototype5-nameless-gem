@@ -1,0 +1,28 @@
+@(attacks: List[protobuf.skill.Attack])
+
+@Pages.main {
+    @Pages.row1 {
+        @table(attacks) {
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.Name)</td>
+                <td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range)</td>
+                <td>@Components.number(id = "tp", getter = "tpValue")</td>
+                <td>@Components.number(id = "atk", getter = "atkValue")</td>
+                <td>@Components.number(id = "spd", getter = "spdValue")</td>
+                <td>@Components.number(id = "hit", getter = "hitValue")</td>
+                <td>
+                    @Apis.button.create(controllers.skill.routes.AttackController.set) {
+                        {
+                            'name': nameValue(),
+                            'range': rangeValue(),
+                            'tp': tpValue(),
+                            'atk': atkValue(),
+                            'spd': spdValue(),
+                            'hit': hitValue()
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
+}

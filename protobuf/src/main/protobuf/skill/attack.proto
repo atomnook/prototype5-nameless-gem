@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package protobuf.skill;
+
+import "name.proto";
+import "skill/range.proto";
+
+message Attack {
+  Name name = 1;
+  Range range = 2;
+  int64 tp = 3;
+  int64 atk = 4;
+  int64 spd = 6;
+  int64 hit = 7;
+}
