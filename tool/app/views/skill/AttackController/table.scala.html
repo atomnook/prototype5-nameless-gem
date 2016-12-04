@@ -1,0 +1,28 @@
+@(values: List[protobuf.skill.Attack])(html: Html)
+
+<table class="table table-striped">
+    <tr>
+        <th>name</th>
+        <th>range</th>
+        <th>tp</th>
+        <th>atk</th>
+        <th>spd</th>
+        <th>hit</th>
+        <th></th>
+    </tr>
+
+    @html
+
+    @for(value <- values) {
+        <tr>
+            <td>
+                <a class="label label-primary" href="@controllers.skill.routes.AttackController.get(value.name.name)">@value.name.name</a>
+            </td>
+            <td><span class="label label-primary">@value.range.name</span></td>
+            <td>@value.tp</td>
+            <td>@value.atk</td>
+            <td>@value.spd</td>
+            <td>@value.hit</td>
+        </tr>
+    }
+</table>

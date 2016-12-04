@@ -38,4 +38,6 @@ class DatabaseServiceSpec extends FlatSpec with Checkers {
   ops("Character", _.characters)
 
   ops("item.Equipment", _.equipments)
+
+  ops("skill.Attack", _.attacks)
 }
