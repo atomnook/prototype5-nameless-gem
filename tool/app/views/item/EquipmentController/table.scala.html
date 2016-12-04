@@ -1,0 +1,28 @@
+@(values: List[protobuf.item.Equipment])(html: Html)
+
+<table class="table table-striped">
+    <tr>
+        <th>name</th>
+        <th>price</th>
+        <th>atk</th>
+        <th>def</th>
+        <th>mat</th>
+        <th>mdf</th>
+        <th></th>
+    </tr>
+
+    @html
+
+    @for(value <- values) {
+        <tr>
+            <td>
+                <a class="label label-primary" href="@controllers.item.routes.EquipmentController.get(value.name.name)">@value.name.name</a>
+            </td>
+            <td>@value.price</td>
+            <td>@value.atk</td>
+            <td>@(value.`def`)</td>
+            <td>@value.mat</td>
+            <td>@value.mdf</td>
+        </tr>
+    }
+</table>

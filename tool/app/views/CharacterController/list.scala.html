@@ -7,22 +7,14 @@
                 <td>@Components.text(id = "id", getter = "idValue", placeholder = "character id")</td>
                 <td>@Components.text(id = "name", getter = "nameValue", placeholder = "character name")</td>
                 <td>
-                    <button id="create" class="btn btn-success">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
-                    </button>
+                    @Apis.button.create(routes.CharacterController.set) {
+                        {
+                            'id': idValue(),
+                            'name': nameValue()
+                        }
+                    }
                 </td>
             </tr>
         }
     }
-
-    <script>
-        $('#create').click(function() {
-            @Apis.post(routes.CharacterController.set) {
-                {
-                    'id': idValue(),
-                    'name': nameValue()
-                }
-            }
-        });
-    </script>
 }

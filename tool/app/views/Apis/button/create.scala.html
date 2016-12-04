@@ -1,0 +1,11 @@
+@(url: play.api.mvc.Call)(json: Html)
+
+<button id="create" class="btn btn-success">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create
+</button>
+
+<script>
+    $('#create').click(function() {
+        @Apis.post(url)(json)
+    });
+</script>

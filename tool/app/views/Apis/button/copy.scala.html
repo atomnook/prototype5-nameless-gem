@@ -1,0 +1,11 @@
+@(url: play.api.mvc.Call)(json: Html)
+
+<button id="copy" class="btn btn-success" type="submit">
+    <span class="glyphicon glyphicon-paste" aria-hidden="true"></span> Copy
+</button>
+
+<script>
+    $('#copy').click(function() {
+        @Apis.post(url)(json)
+    });
+</script>
