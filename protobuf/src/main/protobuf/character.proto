@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package protobuf;
 
+import "routine/routine.proto";
+
 message CharacterId {
   string id = 1;
 }
@@ -9,4 +11,5 @@ message CharacterId {
 message Character {
   CharacterId id = 1;
   string name = 2;
+  routine.RoutineId routine = 3;
 }

@@ -3,6 +3,7 @@ package domain.service
 import domain.ops.{DatabaseOps, Ops}
 import protobuf.Character
 import protobuf.item.Equipment
+import protobuf.routine.Routine
 import protobuf.skill.Attack
 
 class DatabaseService(context: ServiceContext) {
@@ -11,6 +12,8 @@ class DatabaseService(context: ServiceContext) {
   def equipments: Ops[Equipment] = DatabaseOps.apply(context.database, _.equipments, _.equipments)
 
   def attacks: Ops[Attack] = DatabaseOps.apply(context.database, _.attacks, _.attacks)
+
+  def routines: Ops[Routine] = DatabaseOps.apply(context.database, _.routines, _.routines)
 }
 
 object DatabaseService {

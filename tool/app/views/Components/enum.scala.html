@@ -1,13 +1,5 @@
-@(id: String, getter: String, enum: com.trueaccord.scalapb.GeneratedEnumCompanion[_ <: com.trueaccord.scalapb.GeneratedEnum], default: Int = 0)
+@import com.trueaccord.scalapb._
 
-<select id="@id" class="form-control">
-    @for(value <- enum.values) {
-        <option value="@value.name" @if(default == value.value) {selected}>@value.name</option>
-    }
-</select>
+@(id: String, getter: String, enum: GeneratedEnumCompanion[_ <: GeneratedEnum], default: String = "")
 
-<script>
-    @getter = function() {
-        return $('#@id').val();
-    };
-</script>
+@select(id = id, getter = getter, values = enum.values.map(_.name), default = default)

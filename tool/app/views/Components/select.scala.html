@@ -1,0 +1,13 @@
+@(id: String, getter: String, values: Seq[String], default: String = "")
+
+<select id="@id" class="form-control">
+    @for(value <- values) {
+        <option value="@value" @if(default == value) {selected}>@value</option>
+    }
+</select>
+
+<script>
+    @getter = function() {
+        return $('#@id').val();
+    };
+</script>
