@@ -3,7 +3,10 @@ syntax = "proto3";
 package protobuf;
 
 import "character.proto";
+import "item/equipment.proto";
 
 message Database {
   repeated Character characters = 1;
+
+  repeated item.Equipment equipments = 2;
 }

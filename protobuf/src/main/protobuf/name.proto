@@ -4,4 +4,12 @@ package protobuf;
 
 enum Name {
   NAMELESS = 0;
+
+  DAGGER = 1;
+  SWORD = 2;
+  AXE = 3;
+  ROD = 4;
+  BOW = 5;
+  GLOVE = 6;
+  SPEAR = 7;
 }

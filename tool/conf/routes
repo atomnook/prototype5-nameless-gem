@@ -9,5 +9,12 @@ GET /characters/:id   controllers.CharacterController.get(id: String)
 POST /characters.json   controllers.CharacterController.set
 DELETE /characters/:id.json   controllers.CharacterController.delete(id: String)
 
+# item/Equipments
+GET /items/equipments   controllers.item.EquipmentController.list
+GET /items/equipments/:id   controllers.item.EquipmentController.get(id: String)
+
+POST /items/equipments.json   controllers.item.EquipmentController.set
+DELETE /items/equipments/:id    controllers.item.EquipmentController.delete(id: String)
+
 # Assets
 GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")

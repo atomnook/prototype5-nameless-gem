@@ -1,0 +1,9 @@
+@(id: String, getter: String, default: Long = 0)
+
+<input type="number" id="@id" class="form-control" value="@default">
+
+<script>
+    @getter = function() {
+        return parseInt($('#@id').val(), 10);
+    };
+</script>

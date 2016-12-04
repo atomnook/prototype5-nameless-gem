@@ -1,0 +1,13 @@
+@(id: String, getter: String, enum: com.trueaccord.scalapb.GeneratedEnumCompanion[_ <: com.trueaccord.scalapb.GeneratedEnum], default: Int = 0)
+
+<select id="@id" class="form-control">
+    @for(value <- enum.values) {
+        <option value="@value.name" @if(default == value.value) {selected}>@value.name</option>
+    }
+</select>
+
+<script>
+    @getter = function() {
+        return $('#@id').val();
+    };
+</script>
