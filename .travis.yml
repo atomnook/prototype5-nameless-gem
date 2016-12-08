@@ -26,4 +26,4 @@ before_script:
   - unzip chromedriver_linux64.zip
 
 script:
-   - sbt ++$TRAVIS_SCALA_VERSION test
+   - sbt ++$TRAVIS_SCALA_VERSION test:compile test
