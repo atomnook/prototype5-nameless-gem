@@ -1,0 +1,17 @@
+@(id: String, getter: String, enum: com.trueaccord.scalapb.GeneratedEnumCompanion[_ <: com.trueaccord.scalapb.GeneratedEnum], default: Seq[_ <: com.trueaccord.scalapb.GeneratedEnum] = Nil)
+
+<select id="@id" class="form-control" multiple>
+    @for(value <- enum.values) {
+        <option value="@value.name" @if(default.contains(value)) {selected}>@value.name</option>
+    }
+</select>
+
+<script>
+    @getter = function() {
+        var values = $('#@id').val();
+        if (values == null) {
+            return [];
+        }
+        return values;
+    };
+</script>

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package protobuf.routine;
+
+import "routine/alternative.proto";
+import "routine/action.proto";
+
+message RoutineId {
+  string id = 1;
+}
+
+message Routine {
+  RoutineId id = 1;
+  repeated Alternative alternatives = 2;
+  repeated Action actions = 3;
+}

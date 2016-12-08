@@ -9,6 +9,8 @@ import protobuf.Database
 import protobuf.arbitrary._
 
 class ServiceContextSpec extends FlatSpec with Checkers {
+  override implicit val generatorDrivenConfig = PropertyCheckConfiguration(sizeRange = 10)
+
   it should "write/apply a string" in {
     check { database: Database =>
       val expected = ServiceContext(new AtomicReference[Database](database))

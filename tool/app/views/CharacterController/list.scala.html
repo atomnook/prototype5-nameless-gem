@@ -1,4 +1,4 @@
-@(characters: List[protobuf.Character])
+@(characters: List[protobuf.Character], routines: List[protobuf.routine.RoutineId])
 
 @Pages.main {
     @Pages.row1 {
@@ -6,11 +6,13 @@
             <tr>
                 <td>@Components.text(id = "id", getter = "idValue", placeholder = "character id")</td>
                 <td>@Components.text(id = "name", getter = "nameValue", placeholder = "character name")</td>
+                <td>@Components.select(id = "routine", getter = "routineValue", values = routines.map(_.id))</td>
                 <td>
                     @Apis.button.create(routes.CharacterController.set) {
                         {
                             'id': idValue(),
-                            'name': nameValue()
+                            'name': nameValue(),
+                            'routine': routineValue()
                         }
                     }
                 </td>

@@ -5,7 +5,6 @@ import models.value.{NameValue, RangeValue}
 import play.api.libs.json.{Json, OFormat}
 import protobuf.skill.Attack
 
-
 case class AttackSetter(name: NameValue, range: RangeValue, tp: Long, atk: Long, spd: Long, hit: Long)
   extends ProtobufMutation[Attack] {
 

@@ -23,5 +23,13 @@ GET /skills/attacks/:id   controllers.skill.AttackController.get(id: String)
 POST /skills/attacks.json   controllers.skill.AttackController.set
 DELETE /skills/attacks/:id    controllers.skill.AttackController.delete(id: String)
 
+# routines
+GET /routines   controllers.routine.RoutineController.list
+GET /routines/:id   controllers.routine.RoutineController.get(id: String)
+
+POST /routines.json   controllers.routine.RoutineController.set
+DELETE /routines/:id.json   controllers.routine.RoutineController.delete(id: String)
+
 # Assets
 GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")
+GET /footer.css   controllers.Assets.at(path="/public", file="stylesheets/footer.css")

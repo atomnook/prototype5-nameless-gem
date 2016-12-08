@@ -4,7 +4,6 @@ import domain.ops.Ops
 import org.scalacheck.Arbitrary
 import org.scalatestplus.play.BrowserInfo
 import play.api.mvc.Call
-import protobuf.arbitrary.{arbitrary1, arbitrary2}
 import protobuf.entity.Entity
 
 abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: Entity[A]) extends ToolSpec with Go {
@@ -18,13 +17,15 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
 
   protected[this] def fill(a: A): Unit
 
+  protected[this] def arbitrary2: (A, A) = protobuf.arbitrary.arbitrary2
+
   private[this] def get(id: String): Call = get(entity.identity(id))
 
   override def sharedTests(browser: BrowserInfo): Unit = {
     list.url must {
       s"create ${browser.name}" in {
         val button = id("create")
-        val a = arbitrary1[A]
+        val (a, _) = arbitrary2
 
         go(list, button)
 
@@ -41,9 +42,28 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
     }
 
     get(":id").url must {
+      s"update with nothing changed ${browser.name}" in {
+        val button = id("update")
+        val (a, _) = arbitrary2
+        ops.set(a)
+
+        go(get(a), button)
+
+        val last = context.database.get()
+        context.database.get() must be theSameInstanceAs last
+        assert(ops.get === a :: Nil)
+
+        click on button
+
+        eventually {
+          context.database.get() mustNot be theSameInstanceAs last
+          assert(ops.get === a :: Nil)
+        }
+      }
+
       s"update ${browser.name}" in {
         val button = id("update")
-        val (a, b) = arbitrary2[A]
+        val (a, b) = arbitrary2
         val c = update(a, b)
         ops.set(a)
 
@@ -62,7 +82,7 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
 
       s"copy ${browser.name}" in {
         val button = id("copy")
-        val (a, b) = arbitrary2[A]
+        val (a, b) = arbitrary2
         val c = update(b, a)
         ops.set(a)
 
@@ -81,7 +101,7 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
 
       s"delete ${browser.name}" in {
         val button = id("delete")
-        val a = arbitrary1[A]
+        val (a, _) = arbitrary2
         ops.set(a)
 
         go(get(a), button)

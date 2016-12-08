@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package protobuf.routine;
+
+message Expression {
+  string id = 1;
+}

@@ -5,7 +5,7 @@
         @table(attack :: Nil) {
             <tr>
                 <td></td>
-                <td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range, default = attack.range.value)</td>
+                <td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range, default = attack.range.name)</td>
                 <td>@Components.number(id = "tp", getter = "tpValue", default = attack.tp)</td>
                 <td>@Components.number(id = "atk", getter = "atkValue", default = attack.atk)</td>
                 <td>@Components.number(id = "spd", getter = "spdValue", default = attack.spd)</td>

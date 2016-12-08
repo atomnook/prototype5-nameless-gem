@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package protobuf.routine;
+
+import "routine/expression.proto";
+import "name.proto";
+
+enum ActionType {
+  ATTACK = 0;
+}
+
+enum ActionSet {
+  SELF = 0;
+  ENEMY = 1;
+  FRIEND = 2;
+  ALL = 3;
+}
+
+message Action {
+  Expression id = 1;
+  Name name = 2;
+  ActionType type = 3;
+  repeated ActionSet intersection = 4;
+  Expression otherwise = 5;
+}

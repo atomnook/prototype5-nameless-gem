@@ -13,10 +13,12 @@ trait ToolSpec extends PlaySpec with OneServerPerSuite with AllBrowsersPerSuite 
     new GuiceApplicationBuilder().configure("database.init.enable " -> false).build()
   }
 
-  protected[this] val service = DatabaseService(app.injector.instanceOf(classOf[ServiceContext]))
+  protected[this] val context: ServiceContext = app.injector.instanceOf(classOf[ServiceContext])
+
+  protected[this] val service = DatabaseService(context)
 
   override protected def beforeEach(): Unit = {
     super.beforeEach()
-    app.injector.instanceOf(classOf[ServiceContext]).clear()
+    context.clear()
   }
 }

@@ -13,7 +13,11 @@ class CharacterController @Inject() (context: ServiceContext)
 
   override protected[this] val ops: Ops[Character] = service.characters
 
-  override protected[this] def list(a: List[Character]): HtmlContent = html.CharacterController.list(a)
+  override protected[this] def list(a: List[Character]): HtmlContent = {
+    html.CharacterController.list(a, service.routines.get.map(_.getId))
+  }
 
-  override protected[this] def get(a: Character): HtmlContent = html.CharacterController.get(a)
+  override protected[this] def get(a: Character): HtmlContent = {
+    html.CharacterController.get(a, service.routines.get.map(_.getId))
+  }
 }
