@@ -1,4 +1,7 @@
-@(routine: protobuf.routine.Routine)
+@import controllers.routine.routes.RoutineController
+@import protobuf.routine._
+
+@(routine: Routine)
 
 @selectExpressions(id: String, default: String = "") = {
     <select id="@id" class="form-control">
@@ -71,13 +74,13 @@
             };
         </script>
         <h1>@routine.getId.id</h1>
-        @Apis.button.delete(controllers.routine.routes.RoutineController.delete(routine.getId.id))
+        @Apis.button.delete(RoutineController.delete(routine.getId.id))
         <button id="apply" class="btn btn-success">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Apply
         </button>
         <script>
             $('#apply').click(function() {
-                @Apis.post(controllers.routine.routes.RoutineController.set) {
+                @Apis.post(RoutineController.set) {
                     {
                         'id': '@routine.getId.id',
                         'alternatives': alternatives(),
@@ -102,7 +105,7 @@
             @for((alternative, i) <- routine.alternatives.zipWithIndex) {
                 <tr id="alternative@i">
                     <th>@Components.text(id = s"alternative-id$i", getter = s"alternativeId${i}Value", default = alternative.getId.id)</th>
-                    <th>@Components.enum(id = s"condition$i", getter = s"condition${i}Value", enum = protobuf.routine.Condition, default = alternative.condition.name)</th>
+                    <th>@Components.enum(id = s"condition$i", getter = s"condition${i}Value", enum = Condition, default = alternative.condition.name)</th>
                     <th>@selectExpressions(id = s"then$i", default = alternative.getThen.id)</th>
                     <th>@selectExpressions(id = s"else$i", default = alternative.getElse.id)</th>
                     <th>@remove(id = s"alternative-remove$i", target = s"alternative$i")</th>
@@ -111,7 +114,7 @@
 
             <tr id="alternative">
                 <th>@Components.text(id = s"alternative-id", getter = s"alternativeIdValue", placeholder = "alternative id")</th>
-                <th>@Components.enum(id = s"condition", getter = s"conditionValue", enum = protobuf.routine.Condition)</th>
+                <th>@Components.enum(id = s"condition", getter = s"conditionValue", enum = Condition)</th>
                 <th>@selectExpressions(id = "then")</th>
                 <th>@selectExpressions(id = "else")</th>
                 <th></th>
@@ -134,9 +137,9 @@
             @for((action, i) <- routine.actions.zipWithIndex) {
                 <tr id="action@i">
                     <th>@Components.text(id = s"action-id$i", getter = s"actionId${i}Value", default = action.getId.id)</th>
-                    <th>@Components.enum(id = s"name$i", getter = s"name${i}Value", enum = protobuf.Name, default = action.name.name)</th>
-                    <th>@Components.enum(id = s"type$i", getter = s"type${i}Value", enum = protobuf.routine.ActionType, default = action.`type`.name)</th>
-                    <th>@Components.enums(id = s"intersection$i", getter = s"intersection${i}Value", enum = protobuf.routine.ActionSet, default = action.intersection)</th>
+                    <th>@Components.enum(id = s"name$i", getter = s"name${i}Value", enum = protobuf.core.Name, default = action.name.name)</th>
+                    <th>@Components.enum(id = s"type$i", getter = s"type${i}Value", enum = ActionType, default = action.`type`.name)</th>
+                    <th>@Components.enums(id = s"intersection$i", getter = s"intersection${i}Value", enum = ActionSet, default = action.intersection)</th>
                     <th>@selectExpressions(id = s"otherwise$i", default = action.getOtherwise.id)</th>
                     <th>@remove(id = s"action-remove$i", target = s"action$i")</th>
                 </tr>
@@ -144,9 +147,9 @@
 
             <tr id="action">
                 <th>@Components.text(id = s"action-id", getter = s"actionIdValue", placeholder = "action id")</th>
-                <th>@Components.enum(id = s"name", getter = s"nameValue", enum = protobuf.Name)</th>
-                <th>@Components.enum(id = s"type", getter = s"typeValue", enum = protobuf.routine.ActionType)</th>
-                <th>@Components.enums(id = s"intersection", getter = s"intersectionValue", enum = protobuf.routine.ActionSet)</th>
+                <th>@Components.enum(id = s"name", getter = s"nameValue", enum = protobuf.core.Name)</th>
+                <th>@Components.enum(id = s"type", getter = s"typeValue", enum = ActionType)</th>
+                <th>@Components.enums(id = s"intersection", getter = s"intersectionValue", enum = ActionSet)</th>
                 <th>@selectExpressions(id = "otherwise")</th>
                 <th></th>
             </tr>

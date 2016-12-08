@@ -1,10 +1,10 @@
-package controllers
+package controllers.character
 
 import domain.ops.Ops
 import helpers.OpsControllerSpec
 import play.api.mvc.Call
-import protobuf.Character
 import protobuf.arbitrary._
+import protobuf.character.Character
 import protobuf.routine.Routine
 
 class CharacterControllerSpec extends OpsControllerSpec[Character] {

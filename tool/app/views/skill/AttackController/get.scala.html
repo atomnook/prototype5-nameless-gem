@@ -1,3 +1,5 @@
+@import controllers.skill.routes.AttackController
+
 @(attack: protobuf.skill.Attack)
 
 @Pages.main {
@@ -11,7 +13,7 @@
                 <td>@Components.number(id = "spd", getter = "spdValue", default = attack.spd)</td>
                 <td>@Components.number(id = "hit", getter = "hitValue", default = attack.hit)</td>
                 <td>
-                    @Apis.button.update(controllers.skill.routes.AttackController.set) {
+                    @Apis.button.update(AttackController.set) {
                         {
                             'name': '@attack.name.name',
                             'range': rangeValue(),
@@ -25,14 +27,14 @@
             </tr>
 
             <tr>
-                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.Name)</td>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.core.Name)</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                    @Apis.button.copy(controllers.skill.routes.AttackController.set) {
+                    @Apis.button.copy(AttackController.set) {
                         {
                             'name': nameValue(),
                             'range': rangeValue(),
@@ -53,7 +55,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    @Apis.button.delete(controllers.skill.routes.AttackController.delete(attack.name.name))
+                    @Apis.button.delete(AttackController.delete(attack.name.name))
                 </td>
             </tr>
         }

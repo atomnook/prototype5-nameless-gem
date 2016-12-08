@@ -1,4 +1,6 @@
-@(id: String, getter: String, enum: com.trueaccord.scalapb.GeneratedEnumCompanion[_ <: com.trueaccord.scalapb.GeneratedEnum], default: Seq[_ <: com.trueaccord.scalapb.GeneratedEnum] = Nil)
+@import com.trueaccord.scalapb._
+
+@(id: String, getter: String, enum: GeneratedEnumCompanion[_ <: GeneratedEnum], default: Seq[_ <: GeneratedEnum] = Nil)
 
 <select id="@id" class="form-control" multiple>
     @for(value <- enum.values) {

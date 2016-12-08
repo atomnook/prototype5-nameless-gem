@@ -1,7 +1,7 @@
 package domain.service
 
 import domain.ops.{DatabaseOps, Ops}
-import protobuf.Character
+import protobuf.character.Character
 import protobuf.item.Equipment
 import protobuf.routine.Routine
 import protobuf.skill.Attack

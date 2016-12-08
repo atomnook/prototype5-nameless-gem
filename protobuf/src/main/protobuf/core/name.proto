@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package protobuf;
+package protobuf.core;
 
 enum Name {
   NAMELESS = 0;

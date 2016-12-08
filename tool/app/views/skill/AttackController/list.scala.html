@@ -4,7 +4,7 @@
     @Pages.row1 {
         @table(attacks) {
             <tr>
-                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.Name)</td>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.core.Name)</td>
                 <td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range)</td>
                 <td>@Components.number(id = "tp", getter = "tpValue")</td>
                 <td>@Components.number(id = "atk", getter = "atkValue")</td>

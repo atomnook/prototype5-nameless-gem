@@ -1,7 +1,7 @@
 package models.value
 
 import play.api.libs.json.Format
-import protobuf.Name
+import protobuf.core.Name
 
 case class NameValue(value: Name) extends EnumValue[Name]
 

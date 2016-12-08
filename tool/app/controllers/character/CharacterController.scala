@@ -1,11 +1,12 @@
-package controllers
+package controllers.character
 
 import javax.inject.Inject
 
+import controllers.OpsController
 import domain.ops.Ops
 import domain.service.ServiceContext
 import models.setter.CharacterSetter
-import protobuf.Character
+import protobuf.character.Character
 import views.html
 
 class CharacterController @Inject() (context: ServiceContext)
@@ -14,10 +15,10 @@ class CharacterController @Inject() (context: ServiceContext)
   override protected[this] val ops: Ops[Character] = service.characters
 
   override protected[this] def list(a: List[Character]): HtmlContent = {
-    html.CharacterController.list(a, service.routines.get.map(_.getId))
+    html.character.CharacterController.list(a, service.routines.get.map(_.getId))
   }
 
   override protected[this] def get(a: Character): HtmlContent = {
-    html.CharacterController.get(a, service.routines.get.map(_.getId))
+    html.character.CharacterController.get(a, service.routines.get.map(_.getId))
   }
 }
