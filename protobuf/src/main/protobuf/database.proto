@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package protobuf;
 
-import "character.proto";
+import "character/character.proto";
 import "item/equipment.proto";
 import "skill/attack.proto";
 import "routine/routine.proto";
 
 message Database {
-  repeated Character characters = 1;
+  repeated character.Character characters = 1;
 
   repeated item.Equipment equipments = 2;
 

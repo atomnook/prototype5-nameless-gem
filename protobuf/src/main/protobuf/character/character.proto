@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package protobuf;
+package protobuf.character;
 
 import "routine/routine.proto";
 

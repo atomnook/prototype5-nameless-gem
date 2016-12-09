@@ -2,6 +2,8 @@ package protobuf
 
 import com.trueaccord.scalapb.{GeneratedEnum, GeneratedEnumCompanion}
 import org.scalacheck.{Arbitrary, Gen}
+import protobuf.character.Character
+import protobuf.core.Name
 import protobuf.entity.Entity
 import protobuf.item.Equipment
 import protobuf.routine._

@@ -1,4 +1,6 @@
-@(character: protobuf.Character, routines: List[protobuf.routine.RoutineId])
+@import controllers.character.routes._
+
+@(character: protobuf.character.Character, routines: List[protobuf.routine.RoutineId])
 
 @Pages.main {
     @Pages.row1 {
@@ -8,7 +10,7 @@
                 <td>@Components.text(id = "name", getter = "nameValue", placeholder = "character name", default = character.name)</td>
                 <td>@Components.select(id = "routine", getter = "routineValue", values = routines.map(_.id))</td>
                 <td>
-                    @Apis.button.update(routes.CharacterController.set) {
+                    @Apis.button.update(CharacterController.set) {
                         {
                             'id': '@character.getId.id',
                             'name': nameValue(),
@@ -21,7 +23,7 @@
                 <td>@Components.text(id = "id", getter = "idValue", placeholder = "character id")</td>
                 <td></td>
                 <td>
-                    @Apis.button.copy(routes.CharacterController.set) {
+                    @Apis.button.copy(CharacterController.set) {
                         {
                             'id': idValue(),
                             'name': nameValue(),
@@ -34,7 +36,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    @Apis.button.delete(routes.CharacterController.delete(character.getId.id))
+                    @Apis.button.delete(CharacterController.delete(character.getId.id))
                 </td>
             </tr>
         }

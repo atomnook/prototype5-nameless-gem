@@ -1,3 +1,5 @@
+@import controllers.item.routes.EquipmentController
+
 @(equipment: protobuf.item.Equipment)
 
 @Pages.main {
@@ -11,7 +13,7 @@
                 <td>@Components.number(id = "mat", getter = "matValue", default = equipment.mat)</td>
                 <td>@Components.number(id = "mdf", getter = "mdfValue", default = equipment.mdf)</td>
                 <td>
-                    @Apis.button.update(controllers.item.routes.EquipmentController.set) {
+                    @Apis.button.update(EquipmentController.set) {
                         {
                             'name': '@equipment.name.name',
                             'price': priceValue(),
@@ -24,14 +26,14 @@
                 </td>
             </tr>
             <tr>
-                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.Name)</td>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.core.Name)</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                    @Apis.button.copy(controllers.item.routes.EquipmentController.set) {
+                    @Apis.button.copy(EquipmentController.set) {
                         {
                             'name': nameValue(),
                             'price': priceValue(),
@@ -51,7 +53,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    @Apis.button.delete(controllers.item.routes.EquipmentController.delete(equipment.name.name))
+                    @Apis.button.delete(EquipmentController.delete(equipment.name.name))
                 </td>
             </tr>
         }

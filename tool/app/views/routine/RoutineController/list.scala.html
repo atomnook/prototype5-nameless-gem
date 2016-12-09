@@ -1,3 +1,5 @@
+@import controllers.routine.routes.RoutineController
+
 @(routines: List[protobuf.routine.Routine])
 
 @Pages.main {
@@ -10,7 +12,7 @@
 
             @for(routine <- routines) {
                 <tr>
-                    <td><a href="@controllers.routine.routes.RoutineController.get(routine.getId.id)">@routine.getId.id</a></td>
+                    <td><a href="@RoutineController.get(routine.getId.id)">@routine.getId.id</a></td>
                     <td></td>
                 </tr>
             }
@@ -18,7 +20,7 @@
             <tr>
                 <td>@Components.text(id = "id", getter = "idValue", placeholder = "routine id")</td>
                 <td>
-                    @Apis.button.create(controllers.routine.routes.RoutineController.set) {
+                    @Apis.button.create(RoutineController.set) {
                         {
                             'id': idValue(),
                             'alternatives': [],

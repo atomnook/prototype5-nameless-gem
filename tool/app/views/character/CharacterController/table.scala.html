@@ -1,4 +1,4 @@
-@(values: List[protobuf.Character])(html: Html)
+@(values: List[protobuf.character.Character])(html: Html)
 
 <table class="table table-striped">
     <tr>
@@ -12,7 +12,7 @@
 
     @for(value <- values) {
         <tr>
-            <td><a href="@routes.CharacterController.get(value.getId.id)">@value.getId.id</a></td>
+            <td><a href="@controllers.character.routes.CharacterController.get(value.getId.id)">@value.getId.id</a></td>
             <td>@value.name</td>
             <td><a href="@controllers.routine.routes.RoutineController.get(value.getRoutine.id)">@value.getRoutine.id</a></td>
             <td></td>

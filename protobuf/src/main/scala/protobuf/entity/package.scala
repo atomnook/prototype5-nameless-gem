@@ -1,5 +1,7 @@
 package protobuf
 
+import protobuf.character.Character
+import protobuf.core.Name
 import protobuf.item.Equipment
 import protobuf.routine.{Alternative, Routine}
 import protobuf.skill.Attack
