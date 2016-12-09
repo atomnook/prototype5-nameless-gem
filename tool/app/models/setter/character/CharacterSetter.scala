@@ -1,4 +1,4 @@
-package models.setter
+package models.setter.character
 
 import models.ProtobufMutation
 import models.value.Identifier

@@ -5,7 +5,7 @@ import javax.inject.Inject
 import controllers.OpsController
 import domain.ops.Ops
 import domain.service.ServiceContext
-import models.setter.CharacterSetter
+import models.setter.character.CharacterSetter
 import protobuf.character.Character
 import views.html
 

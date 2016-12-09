@@ -2,12 +2,20 @@
 GET /   controllers.MainController.index
 GET /download/database    controllers.MainController.download
 
-# /characters
-GET /characters   controllers.character.CharacterController.list
-GET /characters/:id   controllers.character.CharacterController.get(id: String)
+# /characters/characters
+GET /characters/characters   controllers.character.CharacterController.list
+GET /characters/characters/:id   controllers.character.CharacterController.get(id: String)
 
-POST /characters.json   controllers.character.CharacterController.set
-DELETE /characters/:id.json   controllers.character.CharacterController.delete(id: String)
+POST /characters/characters.json   controllers.character.CharacterController.set
+DELETE /characters/characters/:id.json   controllers.character.CharacterController.delete(id: String)
+
+# /characters/classes
+GET /characters/classes   controllers.character.ClassController.list
+GET /characters/classes/:id   controllers.character.ClassController.get(id: String)
+
+POST /characters/classes.json   controllers.character.ClassController.set
+DELETE /characters/classes/:id.json   controllers.character.ClassController.delete(id: String)
+
 
 # /items/equipments
 GET /items/equipments   controllers.item.EquipmentController.list
@@ -15,6 +23,13 @@ GET /items/equipments/:id   controllers.item.EquipmentController.get(id: String)
 
 POST /items/equipments.json   controllers.item.EquipmentController.set
 DELETE /items/equipments/:id.json   controllers.item.EquipmentController.delete(id: String)
+
+# /items/boosts
+GET /items/boosts   controllers.item.BoostController.list
+GET /items/boosts/:id   controllers.item.BoostController.get(id: String)
+
+POST /items/boosts.json   controllers.item.BoostController.set
+DELETE /items/boosts/:id.json   controllers.item.BoostController.delete(id: String)
 
 # skills/attacks
 GET /skills/attacks   controllers.skill.AttackController.list

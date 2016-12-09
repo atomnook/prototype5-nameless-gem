@@ -1,0 +1,39 @@
+@import protobuf.core._
+@import play.api.mvc.Call
+
+@(values: List[(Name, Attributes)], set: Call, get: String => Call)
+
+@Pages.main {
+    @Pages.row1 {
+        @table(values, get) {
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+                <td>@Components.number(id = "hp", getter = "hpValue")</td>
+                <td>@Components.number(id = "tp", getter = "tpValue")</td>
+                <td>@Components.number(id = "str", getter = "strValue")</td>
+                <td>@Components.number(id = "vit", getter = "vitValue")</td>
+                <td>@Components.number(id = "int", getter = "intValue")</td>
+                <td>@Components.number(id = "wis", getter = "wisValue")</td>
+                <td>@Components.number(id = "agi", getter = "agiValue")</td>
+                <td>@Components.number(id = "luc", getter = "lucValue")</td>
+                <td>
+                    @Apis.button.create(set) {
+                        {
+                            'name': nameValue(),
+                            'attributes': {
+                                'hp': hpValue(),
+                                'tp': tpValue(),
+                                'str': strValue(),
+                                'vit': vitValue(),
+                                'int': intValue(),
+                                'wis': wisValue(),
+                                'agi': agiValue(),
+                                'luc': lucValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
+}

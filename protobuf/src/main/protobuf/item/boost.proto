@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package protobuf.item;
+
+import "core/attributes.proto";
+import "core/name.proto";
+
+message Boost {
+  core.Name name = 1;
+  core.Attributes attributes = 2;
+}

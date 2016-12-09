@@ -1,4 +1,14 @@
 @(html: Html)
+
+@dropdown(a: String)(li: Html) = {
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@a <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            @li
+        </ul>
+    </li>
+}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,27 +27,24 @@
                         <img style="height:20px; width:20px" alt="Brand" src="@routes.Assets.at("images/favicon.ico")">
                     </a>
                     <p class="navbar-text navbar-left">
-                        <a href="@controllers.character.routes.CharacterController.list" class="navbar-link">Characters</a>
-                    </p>
-                    <p class="navbar-text navbar-left">
                         <a href="@controllers.routine.routes.RoutineController.list" class="navbar-link">Routines</a>
                     </p>
                 </div>
 
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@controllers.item.routes.EquipmentController.list">Equipments</a></li>
-                        </ul>
-                    </li>
+                    @dropdown("Characters") {
+                        <li><a href="@controllers.character.routes.CharacterController.list">Characters</a></li>
+                        <li><a href="@controllers.character.routes.ClassController.list">Classes</a></li>
+                    }
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Skills <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@controllers.skill.routes.AttackController.list">Attacks</a></li>
-                        </ul>
-                    </li>
+                    @dropdown("Items") {
+                        <li><a href="@controllers.item.routes.EquipmentController.list">Equipments</a></li>
+                        <li><a href="@controllers.item.routes.BoostController.list">Boosts</a></li>
+                    }
+
+                    @dropdown("Skills") {
+                        <li><a href="@controllers.skill.routes.AttackController.list">Attacks</a></li>
+                    }
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

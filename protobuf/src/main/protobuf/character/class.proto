@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package protobuf.character;
+
+import "core/attributes.proto";
+import "core/name.proto";
+
+message Class {
+  core.Name name = 1;
+  core.Attributes attributes = 2;
+}
