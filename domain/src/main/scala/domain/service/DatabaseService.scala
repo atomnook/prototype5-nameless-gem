@@ -1,19 +1,32 @@
 package domain.service
 
+import com.trueaccord.lenses.Lens
 import domain.ops.{DatabaseOps, Ops}
-import protobuf.character.Character
-import protobuf.item.Equipment
+import protobuf.Database
+import protobuf.Database.DatabaseLens
+import protobuf.character.{Character, Class}
+import protobuf.entity.Entity
+import protobuf.item.{Boost, Equipment}
 import protobuf.routine.Routine
 import protobuf.skill.Attack
 
 class DatabaseService(context: ServiceContext) {
-  def characters: Ops[Character] = DatabaseOps.apply(context.database, _.characters, _.characters)
+  private[this] def ops[A : Entity](f: Database => Seq[A],
+                                    g: DatabaseLens[Database] => Lens[Database, Seq[A]]): DatabaseOps[A] = {
+    DatabaseOps.apply[A](context.database, f, g)
+  }
 
-  def equipments: Ops[Equipment] = DatabaseOps.apply(context.database, _.equipments, _.equipments)
+  def characters: Ops[Character] = ops(_.characters, _.characters)
 
-  def attacks: Ops[Attack] = DatabaseOps.apply(context.database, _.attacks, _.attacks)
+  def classes: Ops[Class] = ops(_.classes, _.classes)
 
-  def routines: Ops[Routine] = DatabaseOps.apply(context.database, _.routines, _.routines)
+  def equipments: Ops[Equipment] = ops(_.equipments, _.equipments)
+
+  def boosts: Ops[Boost] = ops(_.boosts, _.boosts)
+
+  def attacks: Ops[Attack] = ops(_.attacks, _.attacks)
+
+  def routines: Ops[Routine] = ops(_.routines, _.routines)
 }
 
 object DatabaseService {

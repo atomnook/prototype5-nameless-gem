@@ -1,0 +1,81 @@
+@import protobuf.core._
+@import play.api.mvc.Call
+
+@(value: (Name, Attributes), set: Call, get: String => Call, delete: String => Call)
+
+@Pages.main {
+    @Pages.row1 {
+        @table(value :: Nil, get) {
+            <tr>
+                <td></td>
+                @defining(value._2) { a =>
+                    <td>@Components.number(id = "hp", getter = "hpValue", default = a.hp)</td>
+                    <td>@Components.number(id = "tp", getter = "tpValue", default = a.tp)</td>
+                    <td>@Components.number(id = "str", getter = "strValue", default = a.str)</td>
+                    <td>@Components.number(id = "vit", getter = "vitValue", default = a.vit)</td>
+                    <td>@Components.number(id = "int", getter = "intValue", default = a.int)</td>
+                    <td>@Components.number(id = "wis", getter = "wisValue", default = a.wis)</td>
+                    <td>@Components.number(id = "agi", getter = "agiValue", default = a.agi)</td>
+                    <td>@Components.number(id = "luc", getter = "lucValue", default = a.luc)</td>
+                }
+                <td>
+                    @Apis.button.update(set) {
+                        {
+                            'name': '@value._1.name',
+                            'attributes': {
+                                'hp': hpValue(),
+                                'tp': tpValue(),
+                                'str': strValue(),
+                                'vit': vitValue(),
+                                'int': intValue(),
+                                'wis': wisValue(),
+                                'agi': agiValue(),
+                                'luc': lucValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Apis.button.copy(set) {
+                        {
+                            'name': nameValue(),
+                            'attributes': {
+                                'hp': hpValue(),
+                                'tp': tpValue(),
+                                'str': strValue(),
+                                'vit': vitValue(),
+                                'int': intValue(),
+                                'wis': wisValue(),
+                                'agi': agiValue(),
+                                'luc': lucValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Apis.button.delete(delete(value._1.name))</td>
+            </tr>
+        }
+    }
+}
