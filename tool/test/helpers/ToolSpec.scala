@@ -1,13 +1,13 @@
 package helpers
 
 import domain.service.{DatabaseService, ServiceContext}
-import org.scalatest.BeforeAndAfterEach
-import org.scalatestplus.play.{AllBrowsersPerSuite, ChromeInfo, OneServerPerSuite, PlaySpec}
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
+import org.scalatestplus.play._
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 
-trait ToolSpec extends PlaySpec with OneServerPerSuite with AllBrowsersPerSuite with BeforeAndAfterEach {
-  override lazy val browsers = Vector(ChromeInfo)
+trait ToolSpec extends PlaySpec with OneServerPerSuite with AllBrowsersPerSuite with BeforeAndAfterEach with BeforeAndAfterAll {
+  override lazy val browsers = Vector(ChromeInfo, FirefoxInfo(firefoxProfile))
 
   implicit override lazy val app: Application = {
     new GuiceApplicationBuilder().configure("database.init.enable " -> false).build()
@@ -20,5 +20,11 @@ trait ToolSpec extends PlaySpec with OneServerPerSuite with AllBrowsersPerSuite 
   override protected def beforeEach(): Unit = {
     super.beforeEach()
     context.clear()
+  }
+
+  override protected def afterAll(): Unit = {
+    super.afterEach()
+    webDriver.close()
+    webDriver.quit()
   }
 }

@@ -16,11 +16,11 @@ class AttackControllerSpec extends OpsControllerSpec[Attack] {
   override protected[this] def update(id: Attack, data: Attack): Attack = data.update(_.name := id.name)
 
   override protected[this] def fill(a: Attack): Unit = {
-    singleSel("name").value = a.name.name
-    singleSel("range").value = a.range.name
-    numberField("tp").value = a.tp.toString
-    numberField("atk").value = a.atk.toString
-    numberField("spd").value = a.spd.toString
-    numberField("hit").value = a.hit.toString
+    enumSelect("name") := a.name
+    enumSelect("range") := a.range
+    number("tp") := a.tp
+    number("atk") := a.atk
+    number("spd") := a.spd
+    number("hit") := a.hit
   }
 }

@@ -25,8 +25,8 @@ class CharacterControllerSpec extends OpsControllerSpec[Character] {
   }
 
   override protected[this] def fill(a: Character): Unit = {
-    textField("id").value = a.getId.id
-    textField("name").value = a.name
-    singleSel("routine").value = a.getRoutine.id
+    text("id") := a.getId.id
+    text("name") := a.name
+    select("routine") := a.getRoutine.id
   }
 }

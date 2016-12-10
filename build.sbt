@@ -11,7 +11,13 @@ val defaultSettings = Seq(
     "-target:jvm-1.8",
     "-Xfatal-warnings"))
 
-val chromedriver = file(sys.props.getOrElse("webdriver.chrome.driver", "chromedriver")).getAbsolutePath
+val chromedriverProp = "webdriver.chrome.driver"
+
+val gekodriverProp = "webdriver.gecko.driver"
+
+val chromedriver = file(sys.props.getOrElse(chromedriverProp, "chromedriver")).getAbsolutePath
+
+val gekodriver = file(sys.props.getOrElse(gekodriverProp, "geckodriver")).getAbsolutePath
 
 val protobufSettings = defaultSettings ++ Seq(
   PB.targets in Compile := Seq(scalapb.gen(grpc = false, flatPackage = true) -> (sourceManaged in Compile).value),
@@ -20,8 +26,12 @@ val protobufSettings = defaultSettings ++ Seq(
 val domainSettings = defaultSettings ++ Seq(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test")
 
 val toolSettings = defaultSettings ++ Seq(
-  javaOptions in Test += s"-Dwebdriver.chrome.driver=$chromedriver",
-  libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test")
+  javaOptions in Test ++= Seq(
+    s"-D$chromedriverProp=$chromedriver",
+    s"-D$gekodriverProp=$gekodriver"),
+  libraryDependencies ++= Seq(
+    "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test",
+    "org.seleniumhq.selenium" % "selenium-firefox-driver" % "3.0.1" % "test"))
 
 val testDependency = "test->test"
 
