@@ -11,6 +11,6 @@ enum Condition {
 message Alternative {
   Expression id = 1;
   Condition condition = 2;
-  Expression then = 3;
-  Expression else = 4;
+  Expression satisfied = 3;
+  Expression otherwise = 4;
 }
