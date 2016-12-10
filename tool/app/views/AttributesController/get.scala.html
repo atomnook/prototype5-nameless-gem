@@ -1,14 +1,14 @@
 @import protobuf.core._
 @import play.api.mvc.Call
 
-@(value: (Name, Attributes), set: Call, get: String => Call, delete: String => Call)
+@(value: NamedAttributes, set: Call, get: String => Call, delete: String => Call)
 
 @Pages.main {
     @Pages.row1 {
         @table(value :: Nil, get) {
             <tr>
                 <td></td>
-                @defining(value._2) { a =>
+                @defining(value.getAttributes) { a =>
                     <td>@Components.number(id = "hp", getter = "hpValue", default = a.hp)</td>
                     <td>@Components.number(id = "tp", getter = "tpValue", default = a.tp)</td>
                     <td>@Components.number(id = "str", getter = "strValue", default = a.str)</td>
@@ -21,7 +21,7 @@
                 <td>
                     @Apis.button.update(set) {
                         {
-                            'name': '@value._1.name',
+                            'name': '@value.name',
                             'attributes': {
                                 'hp': hpValue(),
                                 'tp': tpValue(),
@@ -74,7 +74,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>@Apis.button.delete(delete(value._1.name))</td>
+                <td>@Apis.button.delete(delete(value.name.name))</td>
             </tr>
         }
     }

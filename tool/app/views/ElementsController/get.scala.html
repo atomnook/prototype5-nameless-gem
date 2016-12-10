@@ -1,0 +1,83 @@
+@import protobuf.core._
+
+@(value: NamedElements)
+
+@Pages.main {
+    @Pages.row1 {
+        @table(value :: Nil) {
+            <tr>
+                <td></td>
+                @defining(value.getElements) { a =>
+                    <td>@Components.number(id = "unaspected", getter = "unaspectedValue", default = a.unaspected)</td>
+                    <td>@Components.number(id = "fire", getter = "fireValue", default = a.fire)</td>
+                    <td>@Components.number(id = "ice", getter = "iceValue", default = a.ice)</td>
+                    <td>@Components.number(id = "volt", getter = "voltValue", default = a.volt)</td>
+                    <td>@Components.number(id = "water", getter = "waterValue", default = a.water)</td>
+                    <td>@Components.number(id = "earth", getter = "earthValue", default = a.earth)</td>
+                    <td>@Components.number(id = "wind", getter = "windValue", default = a.wind)</td>
+                    <td>@Components.number(id = "light", getter = "lightValue", default = a.light)</td>
+                    <td>@Components.number(id = "dark", getter = "darkValue", default = a.dark)</td>
+                }
+                <td>
+                    @Apis.button.update(routes.ElementsController.set) {
+                        {
+                            'name': '@value.name',
+                            'elements': {
+                                'unaspected': unaspectedValue(),
+                                'fire': fireValue(),
+                                'ice': iceValue(),
+                                'volt': voltValue(),
+                                'water': waterValue(),
+                                'earth': earthValue(),
+                                'wind': windValue(),
+                                'light': lightValue(),
+                                'dark': darkValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    @Apis.button.copy(routes.ElementsController.set) {
+                        {
+                            'name': nameValue(),
+                            'elements': {
+                                'unaspected': unaspectedValue(),
+                                'fire': fireValue(),
+                                'ice': iceValue(),
+                                'volt': voltValue(),
+                                'water': waterValue(),
+                                'earth': earthValue(),
+                                'wind': windValue(),
+                                'light': lightValue(),
+                                'dark': darkValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>@Apis.button.delete(routes.ElementsController.delete(value.name.name))</td>
+            </tr>
+        }
+    }
+}

@@ -31,19 +31,26 @@ GET /items/boosts/:id   controllers.item.BoostController.get(id: String)
 POST /items/boosts.json   controllers.item.BoostController.set
 DELETE /items/boosts/:id.json   controllers.item.BoostController.delete(id: String)
 
-# skills/attacks
+# /skills/attacks
 GET /skills/attacks   controllers.skill.AttackController.list
 GET /skills/attacks/:id   controllers.skill.AttackController.get(id: String)
 
 POST /skills/attacks.json   controllers.skill.AttackController.set
 DELETE /skills/attacks/:id    controllers.skill.AttackController.delete(id: String)
 
-# routines
+# /routines
 GET /routines   controllers.routine.RoutineController.list
 GET /routines/:id   controllers.routine.RoutineController.get(id: String)
 
 POST /routines.json   controllers.routine.RoutineController.set
 DELETE /routines/:id.json   controllers.routine.RoutineController.delete(id: String)
+
+# /elemental
+GET /elemental    controllers.ElementsController.list
+GET /elemental/:id    controllers.ElementsController.get(id: String)
+
+POST /elemental.json    controllers.ElementsController.set
+DELETE /elemental/:id.json    controllers.ElementsController.delete(id: String)
 
 # Assets
 GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")

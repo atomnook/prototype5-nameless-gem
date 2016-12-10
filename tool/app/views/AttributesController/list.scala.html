@@ -1,7 +1,7 @@
 @import protobuf.core._
 @import play.api.mvc.Call
 
-@(values: List[(Name, Attributes)], set: Call, get: String => Call)
+@(values: List[NamedAttributes], set: Call, get: String => Call)
 
 @Pages.main {
     @Pages.row1 {

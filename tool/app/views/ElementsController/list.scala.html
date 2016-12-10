@@ -1,0 +1,40 @@
+@import protobuf.core._
+
+@(values: List[NamedElements])
+
+@Pages.main {
+    @Pages.row1 {
+        @table(values) {
+            <tr>
+                <td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+                <td>@Components.number(id = "unaspected", getter = "unaspectedValue")</td>
+                <td>@Components.number(id = "fire", getter = "fireValue")</td>
+                <td>@Components.number(id = "ice", getter = "iceValue")</td>
+                <td>@Components.number(id = "volt", getter = "voltValue")</td>
+                <td>@Components.number(id = "water", getter = "waterValue")</td>
+                <td>@Components.number(id = "earth", getter = "earthValue")</td>
+                <td>@Components.number(id = "wind", getter = "windValue")</td>
+                <td>@Components.number(id = "light", getter = "lightValue")</td>
+                <td>@Components.number(id = "dark", getter = "darkValue")</td>
+                <td>
+                    @Apis.button.create(routes.ElementsController.set) {
+                        {
+                            'name': nameValue(),
+                            'elements': {
+                                'unaspected': unaspectedValue(),
+                                'fire': fireValue(),
+                                'ice': iceValue(),
+                                'volt': voltValue(),
+                                'water': waterValue(),
+                                'earth': earthValue(),
+                                'wind': windValue(),
+                                'light': lightValue(),
+                                'dark': darkValue()
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
+}

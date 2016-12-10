@@ -12,4 +12,14 @@ enum Name {
   BOW = 5;
   GLOVE = 6;
   SPEAR = 7;
+
+  UNASPECTED = 8;
+  FIRE = 9;
+  ICE = 10;
+  VOLT = 11;
+  WATER = 12;
+  EARTH = 13;
+  WIND = 14;
+  LIGHT = 15;
+  DARK = 16;
 }

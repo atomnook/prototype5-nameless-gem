@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package protobuf.core;
+
+import "core/attributes.proto";
+import "core/name.proto";
+
+message NamedAttributes {
+  Name name = 1;
+  Attributes attributes = 2;
+}
