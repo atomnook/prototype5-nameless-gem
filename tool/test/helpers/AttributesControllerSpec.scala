@@ -11,7 +11,7 @@ abstract class AttributesControllerSpec extends OpsControllerSpec[NamedAttribute
   override protected[this] def fill(a: NamedAttributes): Unit = {
     val (n, at) = (a.name, a.getAttributes)
 
-    singleSel("name").value = n.name
+    enumSelect("name") := n
 
     Seq(
       ("hp", at.hp),
@@ -22,7 +22,7 @@ abstract class AttributesControllerSpec extends OpsControllerSpec[NamedAttribute
       ("wis", at.wis),
       ("agi", at.agi),
       ("luc", at.luc)).foreach { case (id, v) =>
-      numberField(id).value = v.toString
+      number(id) := v
     }
   }
 }

@@ -1,14 +1,14 @@
 package controllers.routine
 
 import domain.ops.Ops
-import helpers.{Go, ToolSpec}
+import helpers.{Go, Interaction, ToolSpec}
 import org.scalatestplus.play.BrowserInfo
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.entity.Entity
 import protobuf.routine.{Action, Alternative, Routine}
 
-class RoutineControllerSpec extends ToolSpec with Go {
+class RoutineControllerSpec extends ToolSpec with Go with Interaction {
   private[this] def list: Call = routes.RoutineController.list()
 
   private[this] def get(a: Routine): Call = routes.RoutineController.get(a.getId.id)
@@ -17,34 +17,33 @@ class RoutineControllerSpec extends ToolSpec with Go {
 
   private[this] def fill(a: Alternative, index: Option[Int]): Unit = {
     val i = index.map(_.toString).getOrElse("")
-    textField(s"alternative-id$i").value = a.getId.id
-    singleSel(s"condition$i").value = a.condition.name
-    a.satisfied.foreach(id => singleSel(s"satisfied$i").value = id.id)
-    a.otherwise.foreach(id => singleSel(s"alternative-otherwise$i").value = id.id)
+    text(s"alternative-id$i") := a.getId.id
+    enumSelect(s"condition$i") := a.condition
+    a.satisfied.foreach(id => select(s"satisfied$i") := id.id)
+    a.otherwise.foreach(id => select(s"alternative-otherwise$i") := id.id)
   }
 
   private[this] def fill(a: Action, index: Option[Int]): Unit = {
     val i = index.map(_.toString).getOrElse("")
-    textField(s"action-id$i").value = a.getId.id
-    singleSel(s"name$i").value = a.name.name
-    singleSel(s"type$i").value = a.`type`.name
-    multiSel(s"intersection$i").values = a.intersection.map(_.name)
-    a.otherwise.foreach(id => singleSel(s"action-otherwise$i").value = id.id)
+    text(s"action-id$i") := a.getId.id
+    enumSelect(s"name$i") := a.name
+    enumSelect(s"type$i") := a.`type`
+    enumsSelect(s"intersection$i") := a.intersection
+    a.otherwise.foreach(id => select(s"action-otherwise$i") := id.id)
   }
 
   override def sharedTests(browser: BrowserInfo): Unit = {
     list.url must {
       s"create ${browser.name}" in {
-        val button = id("create")
         val a = arbitrary1[Routine].clearAlternatives.clearActions
 
-        go(list, button)
+        go(list)
 
         assert(ops.get === Nil)
 
-        textField("id").value = a.getId.id
+        text("id") := a.getId.id
 
-        click on button
+        click("create")
 
         eventually {
           assert(ops.get === a :: Nil)
@@ -54,34 +53,28 @@ class RoutineControllerSpec extends ToolSpec with Go {
 
     get(implicitly[Entity[Routine]].identity(":id")).url must {
       s"apply ${browser.name}" in {
-        val button = id("apply")
-
         def eventuallyApplied(r: Routine): Routine = {
-          click on button
+          click("apply")
 
           eventually {
             assert(ops.get === r :: Nil)
           }
 
-          explicitlyWait(id("footer"))
-
           r
         }
 
         def remove(q: String): Unit = {
-          val button = id(q)
-
-          click on button
+          click(q)
 
           eventually {
-            assert(button.findElement === None)
+            assert(id(q).findElement === None)
           }
         }
 
         val empty = arbitrary1[Routine].clearAlternatives.clearActions
         ops.set(empty)
 
-        go(get(empty), button)
+        go(get(empty))
 
         assert(ops.get === empty :: Nil)
 
@@ -126,15 +119,14 @@ class RoutineControllerSpec extends ToolSpec with Go {
       }
 
       s"delete s${browser.name}" in {
-        val button = id("delete")
         val a = arbitrary1[Routine].clearAlternatives.clearActions
         ops.set(a)
 
-        go(get(a), button)
+        go(get(a))
 
         assert(ops.get === a :: Nil)
 
-        click on button
+        click("delete")
 
         eventually {
           assert(ops.get === Nil)

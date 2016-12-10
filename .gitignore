@@ -5,3 +5,4 @@ protobuf/target/
 target/
 tool/target/
 chromedriver
+geckodriver

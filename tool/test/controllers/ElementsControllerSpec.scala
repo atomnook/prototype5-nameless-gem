@@ -16,7 +16,7 @@ class ElementsControllerSpec extends OpsControllerSpec[NamedElements] {
   override protected[this] def update(id: NamedElements, data: NamedElements): NamedElements = data.update(_.name := id.name)
 
   override protected[this] def fill(a: NamedElements): Unit = {
-    singleSel("name").value = a.name.name
+    enumSelect("name") := a.name
 
     val e = a.getElements
     Seq(
@@ -29,7 +29,7 @@ class ElementsControllerSpec extends OpsControllerSpec[NamedElements] {
       ("wind", e.wind),
       ("light", e.light),
       ("dark", e.dark)).foreach { case (q, v) =>
-      numberField(q).value = v.toString
+      number(q) := v
     }
   }
 }
