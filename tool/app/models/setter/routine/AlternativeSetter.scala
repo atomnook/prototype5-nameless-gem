@@ -7,16 +7,16 @@ import protobuf.routine.Alternative
 
 case class AlternativeSetter(id: Identifier,
                              condition: ConditionValue,
-                             `then`: Option[Identifier],
-                             `else`: Option[Identifier])
+                             satisfied: Option[Identifier],
+                             otherwise: Option[Identifier])
   extends ProtobufMutation[Alternative] {
 
   override def toProtobuf: Alternative = {
     Alternative().update(
       _.id.id := id.id,
       _.condition := condition.value,
-      _.optionalThen := `then`.map(_.expression),
-      _.optionalElse := `else`.map(_.expression))
+      _.optionalSatisfied := satisfied.map(_.expression),
+      _.optionalOtherwise := otherwise.map(_.expression))
   }
 }
 

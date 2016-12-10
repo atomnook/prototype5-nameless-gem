@@ -38,14 +38,14 @@
                 $('#alternatives tr').each(function() {
                     var id = $(this).find('[id^=alternative-id]').val();
                     var condition = $(this).find('[id^=condition]').val();
-                    var then = $(this).find('[id^=then]').val();
-                    var else_ = $(this).find('[id^=else]').val();
+                    var satisfied = $(this).find('[id^=satisfied]').val();
+                    var otherwise = $(this).find('[id^=alternative-otherwise]').val();
                     if (id != null && id != "") {
                         res.push({
                             'id': id,
                             'condition': condition,
-                            'then': expression(then),
-                            'else': expression(else_)
+                            'satisfied': expression(satisfied),
+                            'otherwise': expression(otherwise)
                         });
                     }
                 });
@@ -59,7 +59,7 @@
                     var name = $(this).find('[id^=name]').val();
                     var type = $(this).find('[id^=type]').val();
                     var intersection = $(this).find('[id^=intersection]').val();
-                    var otherwise = $(this).find('[id^=otherwise]').val();
+                    var otherwise = $(this).find('[id^=action-otherwise]').val();
                     if (id != null && id != "") {
                         res.push({
                             'id': id,
@@ -97,8 +97,8 @@
             <tr>
                 <th>id</th>
                 <th>condition</th>
-                <th>then</th>
-                <th>else</th>
+                <th>satisfied</th>
+                <th>otherwise</th>
                 <th></th>
             </tr>
 
@@ -106,8 +106,8 @@
                 <tr id="alternative@i">
                     <th>@Components.text(id = s"alternative-id$i", getter = s"alternativeId${i}Value", default = alternative.getId.id)</th>
                     <th>@Components.enum(id = s"condition$i", getter = s"condition${i}Value", enum = Condition, default = alternative.condition.name)</th>
-                    <th>@selectExpressions(id = s"then$i", default = alternative.getThen.id)</th>
-                    <th>@selectExpressions(id = s"else$i", default = alternative.getElse.id)</th>
+                    <th>@selectExpressions(id = s"satisfied$i", default = alternative.getSatisfied.id)</th>
+                    <th>@selectExpressions(id = s"alternative-otherwise$i", default = alternative.getOtherwise.id)</th>
                     <th>@remove(id = s"alternative-remove$i", target = s"alternative$i")</th>
                 </tr>
             }
@@ -115,8 +115,8 @@
             <tr id="alternative">
                 <th>@Components.text(id = s"alternative-id", getter = s"alternativeIdValue", placeholder = "alternative id")</th>
                 <th>@Components.enum(id = s"condition", getter = s"conditionValue", enum = Condition)</th>
-                <th>@selectExpressions(id = "then")</th>
-                <th>@selectExpressions(id = "else")</th>
+                <th>@selectExpressions(id = "satisfied")</th>
+                <th>@selectExpressions(id = "alternative-otherwise")</th>
                 <th></th>
             </tr>
         </table>
@@ -140,7 +140,7 @@
                     <th>@Components.enum(id = s"name$i", getter = s"name${i}Value", enum = protobuf.core.Name, default = action.name.name)</th>
                     <th>@Components.enum(id = s"type$i", getter = s"type${i}Value", enum = ActionType, default = action.`type`.name)</th>
                     <th>@Components.enums(id = s"intersection$i", getter = s"intersection${i}Value", enum = ActionSet, default = action.intersection)</th>
-                    <th>@selectExpressions(id = s"otherwise$i", default = action.getOtherwise.id)</th>
+                    <th>@selectExpressions(id = s"action-otherwise$i", default = action.getOtherwise.id)</th>
                     <th>@remove(id = s"action-remove$i", target = s"action$i")</th>
                 </tr>
             }
@@ -150,7 +150,7 @@
                 <th>@Components.enum(id = s"name", getter = s"nameValue", enum = protobuf.core.Name)</th>
                 <th>@Components.enum(id = s"type", getter = s"typeValue", enum = ActionType)</th>
                 <th>@Components.enums(id = s"intersection", getter = s"intersectionValue", enum = ActionSet)</th>
-                <th>@selectExpressions(id = "otherwise")</th>
+                <th>@selectExpressions(id = "action-otherwise")</th>
                 <th></th>
             </tr>
         </table>

@@ -19,8 +19,8 @@ class RoutineControllerSpec extends ToolSpec with Go {
     val i = index.map(_.toString).getOrElse("")
     textField(s"alternative-id$i").value = a.getId.id
     singleSel(s"condition$i").value = a.condition.name
-    a.`then`.foreach(id => singleSel(s"then$i").value = id.id)
-    a.`else`.foreach(id => singleSel(s"else$i").value = id.id)
+    a.satisfied.foreach(id => singleSel(s"satisfied$i").value = id.id)
+    a.otherwise.foreach(id => singleSel(s"alternative-otherwise$i").value = id.id)
   }
 
   private[this] def fill(a: Action, index: Option[Int]): Unit = {
@@ -29,7 +29,7 @@ class RoutineControllerSpec extends ToolSpec with Go {
     singleSel(s"name$i").value = a.name.name
     singleSel(s"type$i").value = a.`type`.name
     multiSel(s"intersection$i").values = a.intersection.map(_.name)
-    a.otherwise.foreach(id => singleSel(s"otherwise$i").value = id.id)
+    a.otherwise.foreach(id => singleSel(s"action-otherwise$i").value = id.id)
   }
 
   override def sharedTests(browser: BrowserInfo): Unit = {
@@ -87,7 +87,7 @@ class RoutineControllerSpec extends ToolSpec with Go {
 
         // add alternatives
         val alternatives = Seq(0, 1).foldLeft(empty) { case (routine, i) =>
-          val alt = arbitrary1[Alternative].update(_.id.id := s"alt$i").clearThen.clearElse
+          val alt = arbitrary1[Alternative].update(_.id.id := s"alt$i").clearSatisfied.clearOtherwise
 
           fill(alt, None)
 
@@ -106,7 +106,7 @@ class RoutineControllerSpec extends ToolSpec with Go {
         // change
         val alt0 = actions.alternatives.head
         val act0 = actions.actions.head
-        val changedAlt1 = arbitrary1[Alternative].update(_.`then` := alt0.getId, _.`else` := act0.getId)
+        val changedAlt1 = arbitrary1[Alternative].update(_.satisfied := alt0.getId, _.otherwise := act0.getId)
         val changedAct1 = arbitrary1[Action].update(_.otherwise := act0.getId)
 
         fill(changedAlt1, Some(1))

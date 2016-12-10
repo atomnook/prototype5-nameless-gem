@@ -2,7 +2,14 @@ val defaultSettings = Seq(
   scalaVersion := "2.11.8",
   parallelExecution in Test := false,
   logBuffered in Test := false,
-  testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oDS"))
+  testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oDS"),
+  scalacOptions ++= Seq(
+    "-deprecation",
+    "-encoding", "UTF-8",
+    "-feature",
+    "-unchecked",
+    "-target:jvm-1.8",
+    "-Xfatal-warnings"))
 
 val chromedriver = file(sys.props.getOrElse("webdriver.chrome.driver", "chromedriver")).getAbsolutePath
 

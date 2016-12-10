@@ -99,9 +99,12 @@ package object arbitrary {
       for {
         id <- Gen.identifier
         condition <- enum(Condition).arbitrary
-        then_ <- Gen.identifier
-        else_ <- Gen.identifier
-      } yield Alternative().update(_.id.id := id, _.condition := condition, _.`then`.id := then_, _.`else`.id := else_)
+        satisfied <- Gen.identifier
+        otherwise <- Gen.identifier
+      } yield {
+        Alternative().update(
+          _.id.id := id, _.condition := condition, _.satisfied.id := satisfied, _.otherwise.id := otherwise)
+      }
     }
   }
 
