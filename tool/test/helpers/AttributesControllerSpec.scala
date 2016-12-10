@@ -1,14 +1,15 @@
 package helpers
 
-import org.scalacheck.Arbitrary
-import protobuf.core.{Attributes, Name}
-import protobuf.entity.Entity
+import protobuf.arbitrary._
+import protobuf.core.NamedAttributes
 
-abstract class AttributesControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: Entity[A]) extends OpsControllerSpec[A] {
-  protected[this] def tupled(a: A): (Name, Attributes)
+abstract class AttributesControllerSpec extends OpsControllerSpec[NamedAttributes] {
+  override protected[this] def update(id: NamedAttributes, data: NamedAttributes): NamedAttributes = {
+    data.update(_.name := id.name)
+  }
 
-  override protected[this] def fill(a: A): Unit = {
-    val (n, at) = tupled(a)
+  override protected[this] def fill(a: NamedAttributes): Unit = {
+    val (n, at) = (a.name, a.getAttributes)
 
     singleSel("name").value = n.name
 

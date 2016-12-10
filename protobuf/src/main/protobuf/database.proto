@@ -3,20 +3,22 @@ syntax = "proto3";
 package protobuf;
 
 import "character/character.proto";
-import "character/class.proto";
+import "core/named-attributes.proto";
+import "core/named-elements.proto";
 import "item/equipment.proto";
-import "item/boost.proto";
 import "skill/attack.proto";
 import "routine/routine.proto";
 
 message Database {
   repeated character.Character characters = 1;
-  repeated character.Class classes = 2;
+  repeated core.NamedAttributes classes = 2;
 
   repeated item.Equipment equipments = 3;
-  repeated item.Boost boosts = 4;
+  repeated core.NamedAttributes boosts = 4;
 
   repeated skill.Attack attacks = 5;
 
   repeated routine.Routine routines = 6;
+
+  repeated core.NamedElements elemental = 7;
 }

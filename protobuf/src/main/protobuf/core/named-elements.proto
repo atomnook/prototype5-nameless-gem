@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package protobuf.core;
+
+import "core/name.proto";
+import "core/elements.proto";
+
+message NamedElements {
+  Name name = 1;
+  Elements elements = 2;
+}

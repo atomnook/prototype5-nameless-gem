@@ -1,4 +1,4 @@
-package models.setter.common
+package models.setter.core
 
 import models.ProtobufMutation
 import play.api.libs.json.{Json, OFormat}

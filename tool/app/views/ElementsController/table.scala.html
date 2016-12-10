@@ -1,0 +1,38 @@
+@import protobuf.core._
+
+@(values: List[NamedElements])(html: Html)
+
+<table class="table table-striped">
+    <tr>
+        <th>name</th>
+        <th>unaspected</th>
+        <th>fire</th>
+        <th>ice</th>
+        <th>volt</th>
+        <th>water</th>
+        <th>earth</th>
+        <th>wind</th>
+        <th>light</th>
+        <th>dark</th>
+        <th></th>
+    </tr>
+
+    @html
+
+    @for(value <- values) {
+        <tr>
+            <td><a class="label label-primary" href="@routes.ElementsController.get(value.name.name)">@value.name.name</a></td>
+            @defining(value.getElements) { a =>
+                <td>@a.unaspected</td>
+                <td>@a.fire</td>
+                <td>@a.ice</td>
+                <td>@a.volt</td>
+                <td>@a.water</td>
+                <td>@a.earth</td>
+                <td>@a.wind</td>
+                <td>@a.light</td>
+                <td>@a.dark</td>
+            }
+        </tr>
+    }
+</table>

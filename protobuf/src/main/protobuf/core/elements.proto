@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package protobuf.core;
+
+message Elements {
+  int64 unaspected = 1;
+  int64 fire = 2;
+  int64 ice = 3;
+  int64 volt = 4;
+  int64 water = 5;
+  int64 earth = 6;
+  int64 wind = 7;
+  int64 light = 8;
+  int64 dark = 9;
+}

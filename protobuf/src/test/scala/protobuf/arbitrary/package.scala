@@ -3,10 +3,9 @@ package protobuf
 import com.trueaccord.scalapb.{GeneratedEnum, GeneratedEnumCompanion}
 import org.scalacheck.{Arbitrary, Gen}
 import protobuf.character.Character
-import protobuf.character.Class
-import protobuf.core.{Attributes, Name}
+import protobuf.core._
 import protobuf.entity.Entity
-import protobuf.item.{Boost, Equipment}
+import protobuf.item.Equipment
 import protobuf.routine._
 import protobuf.skill.{Attack, Range}
 
@@ -37,6 +36,33 @@ package object arbitrary {
     }
   }
 
+  implicit val elementsArbitrary: Arbitrary[Elements] = {
+    Arbitrary {
+      for {
+        unaspected <- positive
+        fire <- positive
+        ice <- positive
+        volt <- positive
+        water <- positive
+        earth <- positive
+        wind <- positive
+        light <- positive
+        dark <- positive
+      } yield {
+        Elements().update(
+          _.unaspected := unaspected,
+          _.fire := fire,
+          _.ice := ice,
+          _.volt := volt,
+          _.water := water,
+          _.earth := earth,
+          _.wind := wind,
+          _.light := light,
+          _.dark := dark)
+      }
+    }
+  }
+
   implicit val conditionArbitrary: Arbitrary[Condition] = enum(Condition)
 
   implicit val characterArbitrary: Arbitrary[Character] = {
@@ -49,12 +75,21 @@ package object arbitrary {
     }
   }
 
-  implicit val classArbitrary: Arbitrary[Class] = {
+  implicit val namedAttributesArbitrary: Arbitrary[NamedAttributes] = {
     Arbitrary {
       for {
         name <- enum(Name).arbitrary
         attributes <- attributesArbitrary.arbitrary
-      } yield Class().update(_.name := name, _.attributes := attributes)
+      } yield NamedAttributes().update(_.name := name, _.attributes := attributes)
+    }
+  }
+
+  implicit val namedElementsArbitrary: Arbitrary[NamedElements] = {
+    Arbitrary {
+      for {
+        name <- enum(Name).arbitrary
+        elements <- elementsArbitrary.arbitrary
+      } yield NamedElements().update(_.name := name, _.elements := elements)
     }
   }
 
@@ -69,15 +104,6 @@ package object arbitrary {
         mdf <- positive
       } yield Equipment().update(
         _.name := name, _.price := price, _.atk := atk, _.`def` := def_, _.mat := mat, _.mdf := mdf)
-    }
-  }
-
-  implicit val boostArbitrary: Arbitrary[Boost] = {
-    Arbitrary {
-      for {
-        name <- enum(Name).arbitrary
-        attributes <- attributesArbitrary.arbitrary
-      } yield Boost().update(_.name := name, _.attributes := attributes)
     }
   }
 
@@ -137,11 +163,12 @@ package object arbitrary {
     Arbitrary {
       for {
         characters <- Gen.listOf(characterArbitrary.arbitrary)
-        classes <- Gen.listOf(classArbitrary.arbitrary)
+        classes <- Gen.listOf(namedAttributesArbitrary.arbitrary)
         equipments <- Gen.listOf(equipmentArbitrary.arbitrary)
-        boosts <- Gen.listOf(boostArbitrary.arbitrary)
+        boosts <- Gen.listOf(namedAttributesArbitrary.arbitrary)
         attacks <- Gen.listOf(attackArbitrary.arbitrary)
         routines <- Gen.listOf(routineArbitrary.arbitrary)
+        elemental <- Gen.listOf(namedElementsArbitrary.arbitrary)
       } yield {
         Database().update(
           _.characters := characters,
@@ -149,7 +176,8 @@ package object arbitrary {
           _.equipments := equipments,
           _.boosts := boosts,
           _.attacks := attacks,
-          _.routines := routines)
+          _.routines := routines,
+          _.elemental := elemental)
       }
     }
   }

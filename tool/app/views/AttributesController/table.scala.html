@@ -1,6 +1,6 @@
 @import protobuf.core._
 
-@(values: List[(Name, Attributes)], get: String => play.api.mvc.Call)(html: Html)
+@(values: List[NamedAttributes], get: String => play.api.mvc.Call)(html: Html)
 
 <table class="table table-striped">
     <tr>
@@ -17,17 +17,19 @@
 
     @html
 
-    @for((name, value) <- values) {
+    @for(value <- values) {
         <tr>
-            <td><a class="label label-primary" href="@get(name.name)">@name.name</a></td>
-            <td>@value.hp</td>
-            <td>@value.tp</td>
-            <td>@value.str</td>
-            <td>@value.vit</td>
-            <td>@value.int</td>
-            <td>@value.wis</td>
-            <td>@value.agi</td>
-            <td>@value.luc</td>
+            <td><a class="label label-primary" href="@get(value.name.name)">@value.name.name</a></td>
+            @defining(value.getAttributes) { a =>
+                <td>@a.hp</td>
+                <td>@a.tp</td>
+                <td>@a.str</td>
+                <td>@a.vit</td>
+                <td>@a.int</td>
+                <td>@a.wis</td>
+                <td>@a.agi</td>
+                <td>@a.luc</td>
+            }
         </tr>
     }
 </table>

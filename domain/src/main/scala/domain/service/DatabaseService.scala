@@ -4,9 +4,10 @@ import com.trueaccord.lenses.Lens
 import domain.ops.{DatabaseOps, Ops}
 import protobuf.Database
 import protobuf.Database.DatabaseLens
-import protobuf.character.{Character, Class}
+import protobuf.character.Character
+import protobuf.core.{NamedAttributes, NamedElements}
 import protobuf.entity.Entity
-import protobuf.item.{Boost, Equipment}
+import protobuf.item.Equipment
 import protobuf.routine.Routine
 import protobuf.skill.Attack
 
@@ -18,15 +19,17 @@ class DatabaseService(context: ServiceContext) {
 
   def characters: Ops[Character] = ops(_.characters, _.characters)
 
-  def classes: Ops[Class] = ops(_.classes, _.classes)
+  def classes: Ops[NamedAttributes] = ops(_.classes, _.classes)
 
   def equipments: Ops[Equipment] = ops(_.equipments, _.equipments)
 
-  def boosts: Ops[Boost] = ops(_.boosts, _.boosts)
+  def boosts: Ops[NamedAttributes] = ops(_.boosts, _.boosts)
 
   def attacks: Ops[Attack] = ops(_.attacks, _.attacks)
 
   def routines: Ops[Routine] = ops(_.routines, _.routines)
+
+  def elemental: Ops[NamedElements] = ops(_.elemental, _.elemental)
 }
 
 object DatabaseService {
