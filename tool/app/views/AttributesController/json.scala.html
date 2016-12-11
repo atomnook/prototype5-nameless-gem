@@ -1,0 +1,15 @@
+@(id: Option[String])
+
+{
+    'name': @Ops.id(id) { nameValue() },
+    'attributes': {
+        'hp': hpValue(),
+        'tp': tpValue(),
+        'str': strValue(),
+        'vit': vitValue(),
+        'int': intValue(),
+        'wis': wisValue(),
+        'agi': agiValue(),
+        'luc': lucValue()
+    }
+}

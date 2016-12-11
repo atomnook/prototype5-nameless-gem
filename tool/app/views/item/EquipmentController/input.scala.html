@@ -1,0 +1,12 @@
+@import protobuf.item.Equipment
+
+@(value: Option[Equipment])
+
+@v(f: Equipment => Long) = @{ value.map(f).getOrElse(0L) }
+
+<td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.core.Name)</td>
+<td>@Components.number(id = "price", getter = "priceValue", default = v(_.price))</td>
+<td>@Components.number(id = "atk", getter = "atkValue", default = v(_.atk))</td>
+<td>@Components.number(id = "def", getter = "defValue", default = v(_.`def`))</td>
+<td>@Components.number(id = "mat", getter = "matValue", default = v(_.mat))</td>
+<td>@Components.number(id = "mdf", getter = "mdfValue", default = v(_.mdf))</td>

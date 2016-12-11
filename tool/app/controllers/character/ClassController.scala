@@ -11,9 +11,9 @@ import protobuf.core.NamedAttributes
 class ClassController @Inject() (context: ServiceContext) extends AttributesController(context) {
   override protected[this] val setCall: Call = routes.ClassController.set()
 
-  override protected[this] val getCall: (String) => Call = routes.ClassController.get
+  override protected[this] def getCall(id: String): Call = routes.ClassController.get(id)
 
-  override protected[this] val deleteCall: (String) => Call = routes.ClassController.delete
+  override protected[this] def deleteCall(id: String): Call = routes.ClassController.delete(id)
 
   override protected[this] val ops: Ops[NamedAttributes] = service.classes
 }

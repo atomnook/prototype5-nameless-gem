@@ -1,0 +1,3 @@
+@(id: Option[String])(or: Html)
+
+@if(id.isEmpty) {@or} else {@for(s <- id) {'@s'}}

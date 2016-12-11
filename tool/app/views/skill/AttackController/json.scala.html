@@ -1,0 +1,10 @@
+@(value: Option[String])
+
+{
+    'name': @Ops.id(value) { nameValue() },
+    'range': rangeValue(),
+    'tp': tpValue(),
+    'atk': atkValue(),
+    'spd': spdValue(),
+    'hit': hitValue()
+}

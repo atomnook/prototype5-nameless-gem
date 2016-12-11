@@ -1,0 +1,12 @@
+@import protobuf.skill.Attack
+
+@(value: Option[Attack])
+
+@v(f: Attack => Long) = @{ value.map(f).getOrElse(0L) }
+
+<td>@Components.enum(id = "name", getter = "nameValue", enum = protobuf.core.Name)</td>
+<td>@Components.enum(id = "range", getter = "rangeValue", enum = protobuf.skill.Range, default = value.map(_.range.name).getOrElse(""))</td>
+<td>@Components.number(id = "tp", getter = "tpValue", default = v(_.tp))</td>
+<td>@Components.number(id = "atk", getter = "atkValue", default = v(_.atk))</td>
+<td>@Components.number(id = "spd", getter = "spdValue", default = v(_.spd))</td>
+<td>@Components.number(id = "hit", getter = "hitValue", default = v(_.hit))</td>

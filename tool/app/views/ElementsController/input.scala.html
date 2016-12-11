@@ -1,0 +1,16 @@
+@import protobuf.core._
+
+@(value: Option[NamedElements])
+
+@a(f: Elements => Long) = @{ value.map(v => f(v.getElements)).getOrElse(0L) }
+
+<td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+<td>@Components.number(id = "unaspected", getter = "unaspectedValue", default = a(_.unaspected))</td>
+<td>@Components.number(id = "fire", getter = "fireValue", default = a(_.fire))</td>
+<td>@Components.number(id = "ice", getter = "iceValue", default = a(_.ice))</td>
+<td>@Components.number(id = "volt", getter = "voltValue", default = a(_.volt))</td>
+<td>@Components.number(id = "water", getter = "waterValue", default = a(_.water))</td>
+<td>@Components.number(id = "earth", getter = "earthValue", default = a(_.earth))</td>
+<td>@Components.number(id = "wind", getter = "windValue", default = a(_.wind))</td>
+<td>@Components.number(id = "light", getter = "lightValue", default = a(_.light))</td>
+<td>@Components.number(id = "dark", getter = "darkValue", default = a(_.dark))</td>
