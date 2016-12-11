@@ -1,0 +1,16 @@
+@(id: Option[String])
+
+{
+    'name': @Ops.id(id) { nameValue() },
+    'elements': {
+        'unaspected': unaspectedValue(),
+        'fire': fireValue(),
+        'ice': iceValue(),
+        'volt': voltValue(),
+        'water': waterValue(),
+        'earth': earthValue(),
+        'wind': windValue(),
+        'light': lightValue(),
+        'dark': darkValue()
+    }
+}

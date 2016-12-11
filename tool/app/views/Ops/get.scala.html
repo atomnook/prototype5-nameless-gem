@@ -1,0 +1,23 @@
+@import protobuf.core._
+@import play.api.mvc.Call
+
+@(table: Html => Html, input: Html, updateJson: Html, copyJson: Html, set: Call, delete: Call)
+
+@Pages.main {
+    @Pages.row1 {
+        @table {
+            <tr>
+                @input
+                <td>
+                    @Apis.button.update(set) {
+                        @updateJson
+                    }
+                    @Apis.button.copy(set) {
+                        @copyJson
+                    }
+                    @Apis.button.delete(delete)
+                </td>
+            </tr>
+        }
+    }
+}

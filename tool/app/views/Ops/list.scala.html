@@ -1,0 +1,16 @@
+@(table: Html => Html, input: Html, json: Html, set: play.api.mvc.Call)
+
+@Pages.main {
+    @Pages.row1 {
+        @table {
+            <tr>
+                @input
+                <td>
+                    @Apis.button.create(set) {
+                        @json
+                    }
+                </td>
+            </tr>
+        }
+    }
+}

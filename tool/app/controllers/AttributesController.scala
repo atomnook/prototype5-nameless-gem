@@ -7,19 +7,17 @@ import protobuf.core.NamedAttributes
 import views.html
 
 abstract class AttributesController(context: ServiceContext)
-  extends OpsController[NamedAttributes, NamedAttributesSetter](context) {
+  extends OpsController[NamedAttributes, NamedAttributesSetter](context) with FixedOps[NamedAttributes, NamedAttributesSetter] {
 
-  protected[this] val setCall: Call
+  protected[this] def getCall(id: String): Call
 
-  protected[this] val getCall: String => Call
-
-  protected[this] val deleteCall: String => Call
-
-  override protected[this] def list(a: List[NamedAttributes]): HtmlContent = {
-    html.AttributesController.list(a, setCall, getCall)
+  override protected[this] def table(a: List[NamedAttributes]): (HtmlContent) => HtmlContent = {
+    html.AttributesController.table(values = a, get = getCall)
   }
 
-  override protected[this] def get(a: NamedAttributes): HtmlContent = {
-    html.AttributesController.get(a, setCall, getCall, deleteCall)
+  override protected[this] def input(a: Option[NamedAttributes]): HtmlContent = html.AttributesController.input(a)
+
+  override protected[this] def json(id: Option[String]): HtmlContent = {
+    html.AttributesController.json(id)
   }
 }
