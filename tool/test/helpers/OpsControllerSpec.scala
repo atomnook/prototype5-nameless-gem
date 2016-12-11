@@ -5,6 +5,7 @@ import org.scalacheck.Arbitrary
 import org.scalatestplus.play.BrowserInfo
 import play.api.mvc.Call
 import protobuf.entity.Entity
+import lib.implicits.Stream._
 
 abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: Entity[A])
   extends ToolSpec with Go with Interaction {
@@ -19,7 +20,7 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
 
   protected[this] def fill(a: A): Unit
 
-  protected[this] def arbitrary2: (A, A) = protobuf.arbitrary.arbitrary2
+  protected[this] def arbitrary2: (A, A) = protobuf.arbitrary.unique[A].tupled2
 
   private[this] def get(id: String): Call = get(entity.identity(id))
 

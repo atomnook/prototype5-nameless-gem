@@ -19,11 +19,15 @@ val chromedriver = file(sys.props.getOrElse(chromedriverProp, "chromedriver")).g
 
 val gekodriver = file(sys.props.getOrElse(gekodriverProp, "geckodriver")).getAbsolutePath
 
+val scalatest = libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+
+val libSettings = defaultSettings ++ Seq(scalatest)
+
 val protobufSettings = defaultSettings ++ Seq(
   PB.targets in Compile := Seq(scalapb.gen(grpc = false, flatPackage = true) -> (sourceManaged in Compile).value),
   libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test")
 
-val domainSettings = defaultSettings ++ Seq(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test")
+val domainSettings = defaultSettings ++ Seq(scalatest)
 
 val toolSettings = defaultSettings ++ Seq(
   javaOptions in Test ++= Seq(
@@ -35,7 +39,9 @@ val toolSettings = defaultSettings ++ Seq(
 
 val testDependency = "test->test"
 
-lazy val protobuf = (project in file("protobuf")).settings(protobufSettings)
+lazy val lib = (project in file("lib")).settings(libSettings)
+
+lazy val protobuf = (project in file("protobuf")).settings(protobufSettings).dependsOn(lib)
 
 lazy val domain = (project in file("domain")).settings(domainSettings).dependsOn(protobuf, protobuf % testDependency)
 
