@@ -1,6 +1,7 @@
 package domain.service
 
 import domain.ops.Ops
+import lib.implicits.Stream._
 import org.scalacheck.Arbitrary
 import org.scalacheck.Prop._
 import org.scalatest.FlatSpec
@@ -21,7 +22,7 @@ class DatabaseServiceSpec extends FlatSpec with Checkers {
 
     it should s"have delete Ops[$name]" in {
       val service = DatabaseService(ServiceContext())
-      val (v1, v2) = arbitrary2[A]
+      val (v1, v2) = unique[A].tupled2
 
       f(service).set(v1)
       f(service).set(v2)

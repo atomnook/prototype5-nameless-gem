@@ -1,6 +1,7 @@
 package protobuf
 
 import com.trueaccord.scalapb.{GeneratedEnum, GeneratedEnumCompanion}
+import lib.implicits.Stream._
 import org.scalacheck.{Arbitrary, Gen}
 import protobuf.character.Character
 import protobuf.core._
@@ -10,7 +11,7 @@ import protobuf.routine._
 import protobuf.skill.{Attack, Range}
 
 package object arbitrary {
-  private[this] val positive = Gen.chooseNum(0, Int.MaxValue)
+  private[this] val positive = Gen.chooseNum(0, Int.MaxValue).map(_.toLong)
 
   private[this] def enum[A <: GeneratedEnum](c: GeneratedEnumCompanion[A]): Arbitrary[A] = Arbitrary(Gen.oneOf(c.values))
 
@@ -20,46 +21,13 @@ package object arbitrary {
 
   implicit val attributesArbitrary: Arbitrary[Attributes] = {
     Arbitrary {
-      for {
-        hp <- positive
-        tp <- positive
-        str <- positive
-        vit <- positive
-        int <- positive
-        wis <- positive
-        agi <- positive
-        luc <- positive
-      } yield {
-        Attributes().update(
-          _.hp := hp, _.tp := tp, _.str := str, _.vit := vit, _.int := int, _.wis := wis, _.agi := agi, _.luc := luc)
-      }
+      Gen.infiniteStream(positive).map(positives => (Attributes.apply _).tupled(positives.tupled8))
     }
   }
 
   implicit val elementsArbitrary: Arbitrary[Elements] = {
     Arbitrary {
-      for {
-        unaspected <- positive
-        fire <- positive
-        ice <- positive
-        volt <- positive
-        water <- positive
-        earth <- positive
-        wind <- positive
-        light <- positive
-        dark <- positive
-      } yield {
-        Elements().update(
-          _.unaspected := unaspected,
-          _.fire := fire,
-          _.ice := ice,
-          _.volt := volt,
-          _.water := water,
-          _.earth := earth,
-          _.wind := wind,
-          _.light := light,
-          _.dark := dark)
-      }
+      Gen.infiniteStream(positive).map(positives => (Elements.apply _).tupled(positives.tupled9))
     }
   }
 
@@ -97,13 +65,10 @@ package object arbitrary {
     Arbitrary {
       for {
         name <- enum(Name).arbitrary
-        price <- positive
-        atk <- positive
-        def_ <- positive
-        mat <- positive
-        mdf <- positive
-      } yield Equipment().update(
-        _.name := name, _.price := price, _.atk := atk, _.`def` := def_, _.mat := mat, _.mdf := mdf)
+        positives <- Gen.infiniteStream(positive)
+      } yield {
+        Function.uncurried((Equipment.apply _).curried(name)(_)).tupled(positives.tupled5)
+      }
     }
   }
 
@@ -112,11 +77,10 @@ package object arbitrary {
       for {
         name <- enum(Name).arbitrary
         range <- enum(Range).arbitrary
-        tp <- positive
-        atk <- positive
-        spd <- positive
-        hit <- positive
-      } yield Attack().update(_.name := name, _.range := range, _.tp := tp, _.atk := atk, _.spd := spd, _.hit := hit)
+        positives <- Gen.infiniteStream(positive)
+      } yield {
+        Function.uncurried((Attack.apply _).curried(name)(range)(_)).tupled(positives.tupled4)
+      }
     }
   }
 
@@ -182,21 +146,16 @@ package object arbitrary {
     }
   }
 
-  def unique[A](size: Int)(implicit a: Arbitrary[A], e: Entity[A]): List[A] = {
-    (1 to size).foldLeft(List.empty[A]) { case (res, _) =>
-      res :+ Stream.continually(a.arbitrary.sample).flatten.filter(value => !res.exists(e.equal(_, value))).head
-    }
-  }
-
-  private[this] def arbitraryN[A, B](a: List[A])(f: PartialFunction[List[A], B]): B = f.apply(a)
-
   def arbitrary1[A](implicit a: Arbitrary[A]): A = {
     Stream.continually(a.arbitrary.sample).flatten.head
   }
 
-  def arbitrary2[A](implicit a: Arbitrary[A], e: Entity[A]): (A, A) = {
-    arbitraryN(unique(2)(a, e)) {
-      case v1 :: v2 :: Nil => (v1, v2)
+  def unique[A](implicit a: Arbitrary[A], e: Entity[A]): Stream[A] = {
+    def rec(last: List[A], head: A): Stream[A] = {
+      val current = head :: last
+      val next = Stream.continually(a.arbitrary.sample).flatten.filter(v => !current.exists(e.equal(_, v))).head
+      Stream.cons(head, rec(current, next))
     }
+    rec(Nil, arbitrary1[A])
   }
 }

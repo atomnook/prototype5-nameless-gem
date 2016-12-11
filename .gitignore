@@ -1,5 +1,6 @@
 .idea/
 domain/target/
+lib/target/
 project/target/
 protobuf/target/
 target/
