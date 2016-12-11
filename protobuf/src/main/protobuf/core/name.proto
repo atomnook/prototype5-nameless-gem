@@ -22,4 +22,11 @@ enum Name {
   WIND = 14;
   LIGHT = 15;
   DARK = 16;
+
+  POISON = 17;
+  BLIND = 18;
+  SILENCE = 19;
+  CONFUSION = 20;
+  CHARM = 21;
+  SLEEP = 22;
 }

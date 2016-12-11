@@ -5,6 +5,7 @@ package protobuf;
 import "character/character.proto";
 import "core/named-attributes.proto";
 import "core/named-elements.proto";
+import "core/named-status-effects.proto";
 import "item/equipment.proto";
 import "skill/attack.proto";
 import "routine/routine.proto";
@@ -21,4 +22,6 @@ message Database {
   repeated routine.Routine routines = 6;
 
   repeated core.NamedElements elemental = 7;
+
+  repeated core.NamedStatusEffects status_effects = 8;
 }

@@ -52,6 +52,13 @@ GET /elemental/:id    controllers.ElementsController.get(id: String)
 POST /elemental.json    controllers.ElementsController.set
 DELETE /elemental/:id.json    controllers.ElementsController.delete(id: String)
 
+# /status-effects
+GET /status-effects   controllers.StatusEffectsController.list
+GET /status-effects/:id   controllers.StatusEffectsController.get(id: String)
+
+POST /status-effects.json   controllers.StatusEffectsController.set
+DELETE /status-effects/:id.json   controllers.StatusEffectsController.delete(id: String)
+
 # Assets
 GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")
 GET /footer.css   controllers.Assets.at(path="/public", file="stylesheets/footer.css")

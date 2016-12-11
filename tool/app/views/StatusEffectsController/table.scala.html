@@ -1,0 +1,34 @@
+@import protobuf.core.NamedStatusEffects
+
+@(values: List[NamedStatusEffects])(html: Html)
+
+<table class="table table-striped">
+    <tr>
+        <th>name</th>
+        <th>poison</th>
+        <th>blind</th>
+        <th>silence</th>
+        <th>confusion</th>
+        <th>charm</th>
+        <th>sleep</th>
+        <th></th>
+    </tr>
+
+    @html
+
+    @for(value <- values) {
+        <tr>
+            <td><a class="label label-primary" href="@controllers.routes.StatusEffectsController.get(value.name.name)">@value.name.name</a></td>
+            @defining(value.getStatusEffects) { a =>
+                <td>@a.poison</td>
+                <td>@a.blind</td>
+                <td>@a.silence</td>
+                <td>@a.confusion</td>
+                <td>@a.charm</td>
+                <td>@a.sleep</td>
+            }
+            <td></td>
+        </tr>
+    }
+</table>
+

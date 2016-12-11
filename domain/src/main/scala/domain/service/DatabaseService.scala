@@ -5,7 +5,7 @@ import domain.ops.{DatabaseOps, Ops}
 import protobuf.Database
 import protobuf.Database.DatabaseLens
 import protobuf.character.Character
-import protobuf.core.{NamedAttributes, NamedElements}
+import protobuf.core.{NamedAttributes, NamedElements, NamedStatusEffects}
 import protobuf.entity.Entity
 import protobuf.item.Equipment
 import protobuf.routine.Routine
@@ -30,6 +30,8 @@ class DatabaseService(context: ServiceContext) {
   def routines: Ops[Routine] = ops(_.routines, _.routines)
 
   def elemental: Ops[NamedElements] = ops(_.elemental, _.elemental)
+
+  def statusEffects: Ops[NamedStatusEffects] = ops(_.statusEffects, _.statusEffects)
 }
 
 object DatabaseService {

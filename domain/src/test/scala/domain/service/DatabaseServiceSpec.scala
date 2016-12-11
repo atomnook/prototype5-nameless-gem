@@ -49,4 +49,6 @@ class DatabaseServiceSpec extends FlatSpec with Checkers {
   ops("routine.Routine", _.routines)
 
   ops("core.NamedElement", _.elemental)
+
+  ops("core.NamedStatusEffect", _.statusEffects)
 }
