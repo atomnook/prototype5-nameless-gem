@@ -1,0 +1,13 @@
+@import protobuf.core._
+
+@(value: Option[NamedStatusEffects])
+
+@a(f: StatusEffects => Long) = @{ value.map(v => f(v.getStatusEffects)).getOrElse(0L) }
+
+<td>@Components.enum(id = "name", getter = "nameValue", enum = Name)</td>
+<td>@Components.number(id = "poison", getter = "poisonValue", default = a(_.poison))</td>
+<td>@Components.number(id = "blind", getter = "blindValue", default = a(_.blind))</td>
+<td>@Components.number(id = "silence", getter = "silenceValue", default = a(_.silence))</td>
+<td>@Components.number(id = "confusion", getter = "confusionValue", default = a(_.confusion))</td>
+<td>@Components.number(id = "charm", getter = "charmValue", default = a(_.charm))</td>
+<td>@Components.number(id = "sleep", getter = "sleepValue", default = a(_.sleep))</td>

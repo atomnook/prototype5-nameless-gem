@@ -1,0 +1,13 @@
+@(id: Option[String])
+
+{
+    'name': @Ops.id(id) { nameValue() },
+    'effects': {
+        'poison': poisonValue(),
+        'blind': blindValue(),
+        'silence': silenceValue(),
+        'confusion': confusionValue(),
+        'charm': charmValue(),
+        'sleep': sleepValue()
+    }
+}

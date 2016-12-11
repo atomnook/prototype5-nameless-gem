@@ -31,6 +31,12 @@ package object arbitrary {
     }
   }
 
+  implicit val statusEffectsArbitrary: Arbitrary[StatusEffects] = {
+    Arbitrary {
+      Gen.infiniteStream(positive).map(positives => (StatusEffects.apply _).tupled(positives.tupled6))
+    }
+  }
+
   implicit val conditionArbitrary: Arbitrary[Condition] = enum(Condition)
 
   implicit val characterArbitrary: Arbitrary[Character] = {
@@ -58,6 +64,15 @@ package object arbitrary {
         name <- enum(Name).arbitrary
         elements <- elementsArbitrary.arbitrary
       } yield NamedElements().update(_.name := name, _.elements := elements)
+    }
+  }
+
+  implicit val namedStatusEffectsArbitrary: Arbitrary[NamedStatusEffects] = {
+    Arbitrary {
+      for {
+        name <- enum(Name).arbitrary
+        statusEffects <- statusEffectsArbitrary.arbitrary
+      } yield NamedStatusEffects().update(_.name := name, _.statusEffects := statusEffects)
     }
   }
 
@@ -133,6 +148,7 @@ package object arbitrary {
         attacks <- Gen.listOf(attackArbitrary.arbitrary)
         routines <- Gen.listOf(routineArbitrary.arbitrary)
         elemental <- Gen.listOf(namedElementsArbitrary.arbitrary)
+        statusEffects <- Gen.listOf(namedStatusEffectsArbitrary.arbitrary)
       } yield {
         Database().update(
           _.characters := characters,
@@ -141,7 +157,8 @@ package object arbitrary {
           _.boosts := boosts,
           _.attacks := attacks,
           _.routines := routines,
-          _.elemental := elemental)
+          _.elemental := elemental,
+          _.statusEffects := statusEffects)
       }
     }
   }

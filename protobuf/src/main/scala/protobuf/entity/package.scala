@@ -1,7 +1,7 @@
 package protobuf
 
 import protobuf.character.Character
-import protobuf.core.{Name, NamedAttributes, NamedElements}
+import protobuf.core.{Name, NamedAttributes, NamedElements, NamedStatusEffects}
 import protobuf.item.Equipment
 import protobuf.routine.{Alternative, Routine}
 import protobuf.skill.Attack
@@ -14,6 +14,8 @@ package object entity {
   implicit val namedAttributesEntity: Entity[NamedAttributes] = Entity(_.name.name, id => NamedAttributes().update(_.name := name(id)))
 
   implicit val namedElementsEntity: Entity[NamedElements] = Entity(_.name.name, id => NamedElements().update(_.name := name(id)))
+
+  implicit val namedStatusEffectsEntity: Entity[NamedStatusEffects] = Entity(_.name.name, id => NamedStatusEffects().update(_.name := name(id)))
 
   implicit val equipmentEntity: Entity[Equipment] = Entity(_.name.name, id => Equipment().update(_.name := name(id)))
 

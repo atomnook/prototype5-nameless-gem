@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package protobuf.core;
+
+import "core/name.proto";
+import "core/status-effects.proto";
+
+message NamedStatusEffects {
+  Name name = 1;
+  StatusEffects status_effects = 2;
+}
