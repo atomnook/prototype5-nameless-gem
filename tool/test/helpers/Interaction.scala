@@ -3,11 +3,11 @@ package helpers
 import com.trueaccord.scalapb.GeneratedEnum
 import helpers.Interaction.Assignment
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
-import org.scalatestplus.play.{AllBrowsersPerSuite, OneServerPerSuite}
+import org.scalatestplus.play.{OneBrowserPerSuite, OneServerPerSuite}
 
 import scala.concurrent.duration._
 
-trait Interaction { this: OneServerPerSuite with AllBrowsersPerSuite =>
+trait Interaction { this: OneServerPerSuite with OneBrowserPerSuite =>
   private[this] val timeout: FiniteDuration = 10.seconds
 
   private[this] def explicitlyWait(q: String): Unit = {
