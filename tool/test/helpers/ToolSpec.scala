@@ -1,7 +1,11 @@
 package helpers
 
+import java.io.File
+
 import domain.service.{DatabaseService, ServiceContext}
+import org.openqa.selenium.WebDriver
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
+import org.scalatestplus.play.BrowserFactory.UnavailableDriver
 import org.scalatestplus.play._
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -27,6 +31,19 @@ trait ToolSpec
 
   override protected def afterAll(): Unit = {
     super.afterAll()
-    webDriver.quit()
+    webDriver match {
+      case _: UnavailableDriver =>
+      case other => other.quit()
+    }
+  }
+
+  private[this] val driver = "webdriver.gecko.driver"
+
+  override implicit lazy val webDriver: WebDriver = {
+    if (sys.props.get(driver).exists(file => new File(file).isFile)) {
+      createWebDriver()
+    } else {
+      UnavailableDriver(None, s"$driver not found")
+    }
   }
 }
