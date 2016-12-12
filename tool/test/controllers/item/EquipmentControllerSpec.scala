@@ -1,12 +1,12 @@
 package controllers.item
 
 import domain.ops.Ops
-import helpers.OpsControllerSpec
+import helpers.{ChromeSpec, FirefoxSpec, OpsControllerSpec}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.item.Equipment
 
-class EquipmentControllerSpec extends OpsControllerSpec[Equipment] {
+abstract class EquipmentControllerSpec extends OpsControllerSpec[Equipment] {
   override protected[this] def list: Call = routes.EquipmentController.list()
 
   override protected[this] def get(a: Equipment): Call = routes.EquipmentController.get(a.name.name)
@@ -24,3 +24,7 @@ class EquipmentControllerSpec extends OpsControllerSpec[Equipment] {
     number("mdf") := a.mdf
   }
 }
+
+class FirefoxEquipmentControllerSpec extends EquipmentControllerSpec with FirefoxSpec
+
+class ChromeEquipmentControllerSpec extends EquipmentControllerSpec with ChromeSpec

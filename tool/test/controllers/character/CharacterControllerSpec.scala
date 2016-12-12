@@ -1,13 +1,13 @@
 package controllers.character
 
 import domain.ops.Ops
-import helpers.OpsControllerSpec
+import helpers.{ChromeSpec, FirefoxSpec, OpsControllerSpec}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.character.Character
 import protobuf.routine.Routine
 
-class CharacterControllerSpec extends OpsControllerSpec[Character] {
+abstract class CharacterControllerSpec extends OpsControllerSpec[Character] {
   override protected[this] def list: Call = routes.CharacterController.list()
 
   override protected[this] def get(a: Character): Call = routes.CharacterController.get(a.getId.id)
@@ -30,3 +30,7 @@ class CharacterControllerSpec extends OpsControllerSpec[Character] {
     select("routine") := a.getRoutine.id
   }
 }
+
+class FirefoxCharacterControllerSpec extends CharacterControllerSpec with FirefoxSpec
+
+class ChromeCharacterControllerSpec extends CharacterControllerSpec with ChromeSpec

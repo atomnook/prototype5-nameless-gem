@@ -1,12 +1,12 @@
 package controllers
 
 import domain.ops.Ops
-import helpers.OpsControllerSpec
+import helpers.{ChromeSpec, FirefoxSpec, OpsControllerSpec}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.core.NamedElements
 
-class ElementsControllerSpec extends OpsControllerSpec[NamedElements] {
+abstract class ElementsControllerSpec extends OpsControllerSpec[NamedElements] {
   override protected[this] def list: Call = routes.ElementsController.list()
 
   override protected[this] def get(a: NamedElements): Call = routes.ElementsController.get(a.name.name)
@@ -33,3 +33,7 @@ class ElementsControllerSpec extends OpsControllerSpec[NamedElements] {
     }
   }
 }
+
+class FirefoxElementControllerSpec extends ElementsControllerSpec with FirefoxSpec
+
+class ChromeElementControllerSpec extends ElementsControllerSpec with ChromeSpec

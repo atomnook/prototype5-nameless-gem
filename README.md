@@ -13,7 +13,6 @@ tar -xvf geckodriver-v0.11.1-macos.tar.gz
 
 see [mozilla/geckodriver](https://github.com/mozilla/geckodriver/releases).
 
-#### Todo
 ```
 wget https://chromedriver.storage.googleapis.com/2.25/chromedriver_mac64.zip
 unzip chromedriver_mac64.zip

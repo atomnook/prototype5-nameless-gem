@@ -1,14 +1,14 @@
 package controllers.routine
 
 import domain.ops.Ops
-import helpers.{Go, Interaction, ToolSpec}
+import helpers._
 import org.scalatest.time.{Millis, Seconds, Span}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.entity.Entity
 import protobuf.routine.{Action, Alternative, Routine}
 
-class RoutineControllerSpec extends ToolSpec with Go with Interaction {
+abstract class RoutineControllerSpec extends ToolSpec with Go with Interaction {
   private[this] implicit override val patienceConfig =
     PatienceConfig(timeout = scaled(Span(30, Seconds)), interval = scaled(Span(150, Millis)))
 
@@ -136,3 +136,7 @@ class RoutineControllerSpec extends ToolSpec with Go with Interaction {
     }
   }
 }
+
+class FirefoxRoutineControllerSpec extends RoutineControllerSpec with FirefoxSpec
+
+class ChromeRoutineControllerSpec extends RoutineControllerSpec with ChromeSpec
