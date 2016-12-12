@@ -35,7 +35,7 @@ val toolSettings = defaultSettings ++ Seq(
     s"-D$gekodriverProp=$gekodriver"),
   libraryDependencies ++= Seq(
     "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test",
-    "org.seleniumhq.selenium" % "selenium-firefox-driver" % "3.0.1" % "test"))
+    "org.seleniumhq.selenium" % "selenium-firefox-driver" % "2.48.2" % "test")) // https://github.com/playframework/scalatestplus-play/blob/1.5.1/build.sbt#L38
 
 val testDependency = "test->test"
 

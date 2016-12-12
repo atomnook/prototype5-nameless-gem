@@ -4,6 +4,8 @@
 
 ## Testing
 ### Requirement
+Firefox version 41.
+
 ```
 wget https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-macos.tar.gz
 tar -xvf geckodriver-v0.11.1-macos.tar.gz
