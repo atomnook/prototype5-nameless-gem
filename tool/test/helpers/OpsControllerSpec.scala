@@ -1,11 +1,10 @@
 package helpers
 
 import domain.ops.Ops
+import lib.implicits.Stream._
 import org.scalacheck.Arbitrary
-import org.scalatestplus.play.BrowserInfo
 import play.api.mvc.Call
 import protobuf.entity.Entity
-import lib.implicits.Stream._
 
 abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: Entity[A])
   extends ToolSpec with Go with Interaction {
@@ -24,93 +23,91 @@ abstract class OpsControllerSpec[A](implicit arbitrary: Arbitrary[A], entity: En
 
   private[this] def get(id: String): Call = get(entity.identity(id))
 
-  override def sharedTests(browser: BrowserInfo): Unit = {
-    list.url must {
-      s"create ${browser.name}" in {
-        val (a, _) = arbitrary2
+  list.url must {
+    s"create ${browser.name}" in {
+      val (a, _) = arbitrary2
 
-        go(list)
+      go(list)
 
-        assert(ops.get === Nil)
+      assert(ops.get === Nil)
 
-        fill(a)
+      fill(a)
 
-        click("create")
+      click("create")
 
-        eventually {
-          assert(ops.get === a :: Nil)
-        }
+      eventually {
+        assert(ops.get === a :: Nil)
+      }
+    }
+  }
+
+  get(":id").url must {
+    s"update with nothing changed ${browser.name}" in {
+      val (a, _) = arbitrary2
+      ops.set(a)
+
+      go(get(a))
+
+      val last = context.database.get()
+      context.database.get() must be theSameInstanceAs last
+      assert(ops.get === a :: Nil)
+
+      click("update")
+
+      eventually {
+        context.database.get() mustNot be theSameInstanceAs last
+        assert(ops.get === a :: Nil)
       }
     }
 
-    get(":id").url must {
-      s"update with nothing changed ${browser.name}" in {
-        val (a, _) = arbitrary2
-        ops.set(a)
+    s"update ${browser.name}" in {
+      val (a, b) = arbitrary2
+      val c = update(a, b)
+      ops.set(a)
 
-        go(get(a))
+      go(get(a))
 
-        val last = context.database.get()
-        context.database.get() must be theSameInstanceAs last
-        assert(ops.get === a :: Nil)
+      assert(ops.get === a :: Nil)
 
-        click("update")
+      fill(c)
 
-        eventually {
-          context.database.get() mustNot be theSameInstanceAs last
-          assert(ops.get === a :: Nil)
-        }
+      click("update")
+
+      eventually {
+        assert(ops.get === c :: Nil)
       }
+    }
 
-      s"update ${browser.name}" in {
-        val (a, b) = arbitrary2
-        val c = update(a, b)
-        ops.set(a)
+    s"copy ${browser.name}" in {
+      val (a, b) = arbitrary2
+      val c = update(b, a)
+      ops.set(a)
 
-        go(get(a))
+      go(get(a))
 
-        assert(ops.get === a :: Nil)
+      assert(ops.get === a :: Nil)
 
-        fill(c)
+      fill(c)
 
-        click("update")
+      click("copy")
 
-        eventually {
-          assert(ops.get === c :: Nil)
-        }
+      eventually {
+        assert(ops.get === a :: c :: Nil)
       }
+    }
 
-      s"copy ${browser.name}" in {
-        val (a, b) = arbitrary2
-        val c = update(b, a)
-        ops.set(a)
+    s"delete ${browser.name}" in {
+      val (a, _) = arbitrary2
+      ops.set(a)
 
-        go(get(a))
+      go(get(a))
 
-        assert(ops.get === a :: Nil)
+      assert(ops.get === a :: Nil)
 
-        fill(c)
+      click("delete")
 
-        click("copy")
-
-        eventually {
-          assert(ops.get === a :: c :: Nil)
-        }
-      }
-
-      s"delete ${browser.name}" in {
-        val (a, _) = arbitrary2
-        ops.set(a)
-
-        go(get(a))
-
-        assert(ops.get === a :: Nil)
-
-        click("delete")
-
-        eventually {
-          assert(ops.get === Nil)
-        }
+      eventually {
+        assert(ops.get === Nil)
       }
     }
   }
