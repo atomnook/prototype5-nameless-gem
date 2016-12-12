@@ -1,12 +1,12 @@
 package controllers.skill
 
 import domain.ops.Ops
-import helpers.OpsControllerSpec
+import helpers.{ChromeSpec, FirefoxSpec, OpsControllerSpec}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.skill.Attack
 
-class AttackControllerSpec extends OpsControllerSpec[Attack] {
+abstract class AttackControllerSpec extends OpsControllerSpec[Attack] {
   override protected[this] def list: Call = routes.AttackController.list()
 
   override protected[this] def get(a: Attack): Call = routes.AttackController.get(a.name.name)
@@ -24,3 +24,7 @@ class AttackControllerSpec extends OpsControllerSpec[Attack] {
     number("hit") := a.hit
   }
 }
+
+class FirefoxAttackControllerSpec extends AttackControllerSpec with FirefoxSpec
+
+class ChromeAttackControllerSpec extends AttackControllerSpec with ChromeSpec

@@ -1,12 +1,12 @@
 package controllers
 
 import domain.ops.Ops
-import helpers.OpsControllerSpec
+import helpers.{ChromeSpec, FirefoxSpec, OpsControllerSpec}
 import play.api.mvc.Call
 import protobuf.arbitrary._
 import protobuf.core.NamedStatusEffects
 
-class StatusEffectsControllerSpec extends OpsControllerSpec[NamedStatusEffects] {
+abstract class StatusEffectsControllerSpec extends OpsControllerSpec[NamedStatusEffects] {
   override protected[this] def list: Call = routes.StatusEffectsController.list()
 
   override protected[this] def get(a: NamedStatusEffects): Call = routes.StatusEffectsController.get(a.name.name)
@@ -32,3 +32,7 @@ class StatusEffectsControllerSpec extends OpsControllerSpec[NamedStatusEffects] 
     }
   }
 }
+
+class FirefoxStatusEffectsControllerSpec extends StatusEffectsControllerSpec with FirefoxSpec
+
+class ChromeStatusEffectsControllerSpec extends StatusEffectsControllerSpec with ChromeSpec
