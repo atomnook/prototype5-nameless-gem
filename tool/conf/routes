@@ -16,7 +16,6 @@ GET /characters/classes/:id   controllers.character.ClassController.get(id: Stri
 POST /characters/classes.json   controllers.character.ClassController.set
 DELETE /characters/classes/:id.json   controllers.character.ClassController.delete(id: String)
 
-
 # /items/equipments
 GET /items/equipments   controllers.item.EquipmentController.list
 GET /items/equipments/:id   controllers.item.EquipmentController.get(id: String)
@@ -58,6 +57,11 @@ GET /status-effects/:id   controllers.StatusEffectsController.get(id: String)
 
 POST /status-effects.json   controllers.StatusEffectsController.set
 DELETE /status-effects/:id.json   controllers.StatusEffectsController.delete(id: String)
+
+# /boards
+GET /boards   controllers.BoardController.board
+
+GET /boards/play    controllers.BoardController.play
 
 # Assets
 GET /favicon.ico    controllers.Assets.at(path="/public", file="images/favicon.ico")
