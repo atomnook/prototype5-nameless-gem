@@ -33,6 +33,9 @@ val protobufSettings = defaultSettings ++ Seq(
 
 val domainSettings = defaultSettings ++ Seq(scalatest)
 
+val boardSettings = defaultSettings ++ Seq(
+  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-actor" % "2.4.12")) // https://github.com/playframework/playframework/blob/2.5.10/framework/project/Dependencies.scala#L9
+
 val toolSettings = defaultSettings ++ Seq(
   javaOptions in Test ++= Seq(
     s"-D$chromedriverProp=$chromedriver",
@@ -49,7 +52,9 @@ lazy val protobuf = (project in file("protobuf")).settings(protobufSettings).dep
 
 lazy val domain = (project in file("domain")).settings(domainSettings).dependsOn(protobuf, protobuf % testDependency)
 
+lazy val board = (project in file("board")).settings(boardSettings).dependsOn(protobuf)
+
 lazy val tool = (project in file("tool")).enablePlugins(PlayScala).settings(toolSettings).
-  dependsOn(domain, protobuf % testDependency)
+  dependsOn(domain, board, protobuf % testDependency)
 
 defaultSettings

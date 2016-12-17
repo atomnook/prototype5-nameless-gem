@@ -1,4 +1,5 @@
 .idea/
+board/target/
 domain/target/
 lib/target/
 project/target/
