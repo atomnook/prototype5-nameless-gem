@@ -1,10 +1,10 @@
 package controllers
 
-import models.ProtobufMutation
+import com.trueaccord.scalapb.GeneratedMessage
 import play.api.mvc.Call
 import views.html
 
-trait FixedOps[A, B <: ProtobufMutation[A]] extends OpsController[A, B] {
+trait FixedOps[A <: GeneratedMessage] extends OpsController[A] {
   protected[this] def table(a: List[A]): HtmlContent => HtmlContent
 
   protected[this] def input(a: Option[A]): HtmlContent

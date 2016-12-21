@@ -24,8 +24,12 @@ val scalatest = libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" 
 val libSettings = defaultSettings ++ Seq(scalatest)
 
 val protobufSettings = defaultSettings ++ Seq(
-  PB.targets in Compile := Seq(scalapb.gen(grpc = false, flatPackage = true) -> (sourceManaged in Compile).value),
-  libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.13.4" % "test")
+  PB.targets in Compile := Seq(
+    PB.gens.java -> (sourceManaged in Compile).value,
+    scalapb.gen(javaConversions=true, grpc = false, flatPackage = true) -> (sourceManaged in Compile).value),
+  libraryDependencies ++= Seq(
+    "com.google.protobuf" % "protobuf-java-util" % com.trueaccord.scalapb.compiler.Version.protobufVersion,
+    "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"))
 
 val domainSettings = defaultSettings ++ Seq(scalatest)
 

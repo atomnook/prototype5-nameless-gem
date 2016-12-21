@@ -1,13 +1,14 @@
 package controllers
 
+import java.io.Reader
+
 import domain.service.ServiceContext
-import models.setter.core.NamedAttributesSetter
 import play.api.mvc.Call
-import protobuf.core.NamedAttributes
+import protobuf.core.{NamedAttributes, NamedAttributesOuterClass}
 import views.html
 
 abstract class AttributesController(context: ServiceContext)
-  extends OpsController[NamedAttributes, NamedAttributesSetter](context) with FixedOps[NamedAttributes, NamedAttributesSetter] {
+  extends OpsController[NamedAttributes](context) with FixedOps[NamedAttributes] {
 
   protected[this] def getCall(id: String): Call
 
@@ -19,5 +20,9 @@ abstract class AttributesController(context: ServiceContext)
 
   override protected[this] def json(id: Option[String]): HtmlContent = {
     html.AttributesController.json(id)
+  }
+
+  override protected[this] def builder(json: Reader): NamedAttributes = {
+    NamedAttributesOuterClass.NamedAttributes.newBuilder().parse(json, b => NamedAttributes.fromJavaProto(b.build()))
   }
 }

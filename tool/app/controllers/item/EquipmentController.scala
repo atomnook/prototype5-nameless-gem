@@ -1,17 +1,17 @@
 package controllers.item
 
+import java.io.Reader
 import javax.inject.Inject
 
 import controllers.{FixedOps, OpsController}
 import domain.ops.Ops
 import domain.service.ServiceContext
-import models.setter.item.EquipmentSetter
 import play.api.mvc.Call
-import protobuf.item.Equipment
+import protobuf.item.{Equipment, EquipmentOuterClass}
 import views.html
 
 class EquipmentController @Inject() (context: ServiceContext)
-  extends OpsController[Equipment, EquipmentSetter](context) with FixedOps[Equipment, EquipmentSetter] {
+  extends OpsController[Equipment](context) with FixedOps[Equipment] {
 
   override protected[this] def table(a: List[Equipment]): (HtmlContent) => HtmlContent = {
     html.item.EquipmentController.table(a)
@@ -30,4 +30,8 @@ class EquipmentController @Inject() (context: ServiceContext)
   override protected[this] def deleteCall(id: String): Call = routes.EquipmentController.delete(id)
 
   override protected[this] val ops: Ops[Equipment] = service.equipments
+
+  override protected[this] def builder(json: Reader): Equipment = {
+    EquipmentOuterClass.Equipment.newBuilder().parse(json, b => Equipment.fromJavaProto(b.build()))
+  }
 }
