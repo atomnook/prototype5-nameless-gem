@@ -1,5 +1,6 @@
 package protobuf
 
+import protobuf.character.Player
 import protobuf.core.{Name, NamedAttributes, NamedElements, NamedStatusEffects}
 import protobuf.item.Equipment
 import protobuf.skill.Attack
@@ -16,4 +17,6 @@ package object entity {
   implicit val equipmentEntity: Entity[Equipment] = Entity(_.name.name, id => Equipment().update(_.name := name(id)))
 
   implicit val attackEntity: Entity[Attack] = Entity(_.name.name, id => Attack().update(_.name := name(id)))
+
+  implicit val playerEntity: Entity[Player] = Entity(_.getId.id, id => Player().update(_.id.id := id))
 }

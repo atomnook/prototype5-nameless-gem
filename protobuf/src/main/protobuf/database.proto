@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package protobuf;
 
+import "character/player.proto";
 import "core/named-attributes.proto";
 import "core/named-elements.proto";
 import "core/named-status-effects.proto";
@@ -20,4 +21,6 @@ message Database {
   repeated core.NamedElements elemental = 7;
 
   repeated core.NamedStatusEffects status_effects = 8;
+
+  repeated character.Player players = 9;
 }

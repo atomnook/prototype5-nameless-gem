@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package protobuf.character;
+
+import "core/verse.proto";
+
+message PlayerId {
+  string id = 1;
+}
+
+message Player {
+  PlayerId id = 1;
+
+  string name = 2;
+
+  repeated core.Verse classes = 3;
+}

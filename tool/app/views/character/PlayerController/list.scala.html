@@ -1,0 +1,27 @@
+@(players: List[protobuf.character.Player])
+
+@Pages.main {
+    @Pages.row1 {
+        <a id="new" class="btn btn-success" href="@controllers.character.routes.PlayerController.create">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+        </a>
+    }
+
+    @Pages.row1 {
+        <table class="table table-striped">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+            </tr>
+
+            @for(player <- players) {
+                <tr>
+                    <td>
+                        <a>@player.getId.id</a>
+                    </td>
+                    <td>@player.name</td>
+                </tr>
+            }
+        </table>
+    }
+}

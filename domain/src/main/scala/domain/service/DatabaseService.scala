@@ -4,6 +4,7 @@ import com.trueaccord.lenses.Lens
 import domain.ops.{DatabaseOps, Ops}
 import protobuf.Database
 import protobuf.Database.DatabaseLens
+import protobuf.character.Player
 import protobuf.core.{NamedAttributes, NamedElements, NamedStatusEffects}
 import protobuf.entity.Entity
 import protobuf.item.Equipment
@@ -26,6 +27,8 @@ class DatabaseService(context: ServiceContext) {
   def elemental: Ops[NamedElements] = ops(_.elemental, _.elemental)
 
   def statusEffects: Ops[NamedStatusEffects] = ops(_.statusEffects, _.statusEffects)
+
+  def players: Ops[Player] = ops(_.players, _.players)
 }
 
 object DatabaseService {
