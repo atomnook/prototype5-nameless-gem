@@ -1,0 +1,27 @@
+@startuml
+
+state Normal {
+  [*] --> Init
+
+  state Init {
+    [*] --> InitializeBoard
+
+    InitializeBoard: receive InitializeBoard message from parent
+
+    InitializeBoard --> LinesReady
+
+    LinesReady: receive LinesReady message from children
+
+    LinesReady --> [*]
+  }
+
+  Init --> Setup : (on transition) tell BoardReady message to parent
+
+  Setup --> [*]
+}
+
+Normal --> Error : (on transition) tell FallIntoErrorState message to parent
+
+Error: any state goes to error state when it receive unhandled message
+
+@enduml

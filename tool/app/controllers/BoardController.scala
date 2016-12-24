@@ -3,10 +3,14 @@ package controllers
 import java.util.UUID
 import javax.inject.Inject
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.{Actor, ActorRef, ActorSystem, PoisonPill, Props}
 import akka.stream.Materializer
+import board.actor.BoardActor
+import board.message.BoardMessage.{BoardReady, FallIntoErrorState}
+import board.message.EscalatedBoardMessage
+import board.setting.{BoardSetting, Lines => BoardLines}
 import controllers.BoardController.PlayActor
-import domain.service.{DatabaseService, ServiceContext}
+import domain.service.ServiceContext
 import models.value.Identifier
 import play.api.libs.json._
 import play.api.libs.streams.ActorFlow
@@ -16,17 +20,17 @@ import views.html
 class BoardController @Inject() (implicit context: ServiceContext, system: ActorSystem, materializer: Materializer)
   extends Controller {
 
-  private[this] val service = DatabaseService(context)
-
   val board: Action[AnyContent] = Action(_ => Ok(html.BoardController.board()))
 
   val play: WebSocket = WebSocket.accept[JsValue, JsValue] { _ =>
-    ActorFlow.actorRef(out => Props(new PlayActor(out)))
+    ActorFlow.actorRef(out => Props(new PlayActor(out, context)))
   }
 }
 
 object BoardController {
-  private[this] case class Lines(front: List[Identifier], rear: List[Identifier])
+  private[this] case class Lines(front: List[Identifier], rear: List[Identifier]) {
+    def setting: BoardLines = BoardLines()
+  }
 
   private[this] case class PlayRequest(friends: Lines, enemies: Lines)
 
@@ -42,8 +46,10 @@ object BoardController {
 
   private[this] implicit val messageFormat: OFormat[PlayMessage] = Json.format[PlayMessage]
 
-  private class PlayActor(out: ActorRef) extends Actor {
+  private class PlayActor(out: ActorRef, serviceContext: ServiceContext) extends Actor {
     private[this] var playId: Option[UUID] = None
+
+    private[this] var child: Option[ActorRef] = None
 
     private[this] def send(message: String): Unit = {
       out ! Json.toJson(PlayMessage(s"$message"))
@@ -53,13 +59,36 @@ object BoardController {
       playId match {
         case Some(id) =>
           send(s"$id already started.")
+
           PlayResponse(accepted = None, errors = None)
 
         case None =>
           val id = UUID.randomUUID()
+
+          val setting = BoardSetting(
+            id = id,
+            database = serviceContext.database.get(),
+            friends = request.friends.setting,
+            enemies = request.enemies.setting)
+
           playId = Some(id)
+
+          child = Some(context.actorOf(BoardActor.props(setting), name = s"board-$id"))
+
           send(s"$id started.")
+
           PlayResponse(accepted = playId.map(_.toString), errors = None)
+      }
+    }
+
+    private[this] def handle(msg: EscalatedBoardMessage): Unit = {
+      msg match {
+        case BoardReady =>
+          send("ready to play.")
+
+        case FallIntoErrorState =>
+          send("connection closed in error state.")
+          self ! PoisonPill
       }
     }
 
@@ -69,6 +98,8 @@ object BoardController {
           invalid => PlayResponse(accepted = None, errors = Some(JsError.toJson(invalid))),
           valid => play(valid))
         out ! Json.toJson(res)
+
+      case msg: EscalatedBoardMessage => handle(msg)
     }
   }
 }
