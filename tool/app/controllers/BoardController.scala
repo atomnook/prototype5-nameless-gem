@@ -18,7 +18,7 @@ class BoardController @Inject() (implicit context: ServiceContext, system: Actor
 
   private[this] val service = DatabaseService(context)
 
-  val board: Action[AnyContent] = Action(_ => Ok(html.BoardController.board(characters = service.characters.get)))
+  val board: Action[AnyContent] = Action(_ => Ok(html.BoardController.board()))
 
   val play: WebSocket = WebSocket.accept[JsValue, JsValue] { _ =>
     ActorFlow.actorRef(out => Props(new PlayActor(out)))
