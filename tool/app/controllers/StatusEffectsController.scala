@@ -1,17 +1,16 @@
 package controllers
 
+import java.io.Reader
 import javax.inject.Inject
 
 import domain.ops.Ops
 import domain.service.ServiceContext
-import models.setter.core.NamedStatusEffectsSetter
 import play.api.mvc.Call
-import protobuf.core.NamedStatusEffects
+import protobuf.core.{NamedStatusEffects, NamedStatusEffectsOuterClass}
 import views.html
 
 class StatusEffectsController @Inject() (context: ServiceContext)
-  extends OpsController[NamedStatusEffects, NamedStatusEffectsSetter](context)
-    with FixedOps[NamedStatusEffects, NamedStatusEffectsSetter] {
+  extends OpsController[NamedStatusEffects](context) with FixedOps[NamedStatusEffects] {
 
   override protected[this] def table(a: List[NamedStatusEffects]): (HtmlContent) => HtmlContent = {
     html.StatusEffectsController.table(a)
@@ -30,4 +29,9 @@ class StatusEffectsController @Inject() (context: ServiceContext)
   override protected[this] def deleteCall(id: String): Call = routes.StatusEffectsController.delete(id)
 
   override protected[this] val ops: Ops[NamedStatusEffects] = service.statusEffects
+
+  override protected[this] def builder(json: Reader): NamedStatusEffects = {
+    NamedStatusEffectsOuterClass.NamedStatusEffects.newBuilder().
+      parse(json, b => NamedStatusEffects.fromJavaProto(b.build()))
+  }
 }
