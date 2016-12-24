@@ -2,13 +2,6 @@
 GET /   controllers.MainController.index
 GET /download/database    controllers.MainController.download
 
-# /characters/characters
-GET /characters/characters   controllers.character.CharacterController.list
-GET /characters/characters/:id   controllers.character.CharacterController.get(id: String)
-
-POST /characters/characters.json   controllers.character.CharacterController.set
-DELETE /characters/characters/:id.json   controllers.character.CharacterController.delete(id: String)
-
 # /characters/classes
 GET /characters/classes   controllers.character.ClassController.list
 GET /characters/classes/:id   controllers.character.ClassController.get(id: String)
@@ -36,13 +29,6 @@ GET /skills/attacks/:id   controllers.skill.AttackController.get(id: String)
 
 POST /skills/attacks.json   controllers.skill.AttackController.set
 DELETE /skills/attacks/:id    controllers.skill.AttackController.delete(id: String)
-
-# /routines
-GET /routines   controllers.routine.RoutineController.list
-GET /routines/:id   controllers.routine.RoutineController.get(id: String)
-
-POST /routines.json   controllers.routine.RoutineController.set
-DELETE /routines/:id.json   controllers.routine.RoutineController.delete(id: String)
 
 # /elemental
 GET /elemental    controllers.ElementsController.list

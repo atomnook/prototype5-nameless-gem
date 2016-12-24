@@ -1,42 +1,4 @@
-@(characters: List[protobuf.character.Character])
-
-@size = @{1 to 6}
-
-@append(getter: String)(line: Html) = {
-    {
-        var v = @(getter)();
-        if (v != null) {
-            @(line).push(v);
-        }
-    }
-}
-
-@friendRearValue(i: Int) = @{s"friendRear${i}Value"}
-
-@friendFrontValue(i: Int) = @{s"friendFront${i}Value"}
-
-@enemyRearValue(i: Int) = @{s"enemyRear${i}Value"}
-
-@enemyFrontValue(i: Int) = @{s"enemyFront${i}Value"}
-
-@select(id: String, getter: String) = {
-    <select id="@id" class="form-control">
-        <option value="">none</option>
-        @for(value <- characters) {
-            <option value="@value.getId.id">@value.name</option>
-        }
-    </select>
-
-    <script>
-        @getter = function() {
-            var res = $('#@id').val();
-            if (res == "") {
-                return null;
-            }
-            return res;
-        };
-    </script>
-}
+@()
 
 @Pages.main {
     @Pages.row1 {
@@ -72,35 +34,9 @@
             $('#play').click(function() {
                 var friends = {'front': [], 'rear': []};
                 var enemies = {'front': [], 'rear': []};
-
-                @for(i <- size) {
-                    @append(getter = friendFrontValue(i)){friends.front}
-                    @append(getter = friendRearValue(i)){friends.rear}
-                    @append(getter = enemyFrontValue(i)){enemies.front}
-                    @append(getter = enemyRearValue(i)){enemies.rear}
-                }
-
                 ws.send(JSON.stringify({'friends': friends, 'enemies': enemies}));
             });
         </script>
-    }
-    @Pages.row1 {
-        <table class="table table-striped">
-            <tr>
-                <th>[f] rear</th>
-                <th>[f] front</th>
-                <th>[e] front</th>
-                <th>[e] rear</th>
-            </tr>
-            @for(i <- size) {
-                <tr>
-                    <td>@select(id = s"friend-rear$i", getter = friendRearValue(i))</td>
-                    <td>@select(id = s"friend-front$i", getter = friendFrontValue(i))</td>
-                    <td>@select(id = s"enemy-front$i", getter = enemyFrontValue(i))</td>
-                    <td>@select(id = s"enemy-rear$i", getter = enemyRearValue(i))</td>
-                </tr>
-            }
-        </table>
     }
 
     @Pages.row1 {

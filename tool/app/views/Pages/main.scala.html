@@ -30,9 +30,6 @@
                         <a href="@controllers.routes.BoardController.board" class="navbar-link">Boards</a>
                     </p>
                     <p class="navbar-text navbar-left">
-                        <a href="@controllers.routine.routes.RoutineController.list" class="navbar-link">Routines</a>
-                    </p>
-                    <p class="navbar-text navbar-left">
                         <a href="@routes.ElementsController.list" class="navbar-link">Elemental</a>
                     </p>
                     <p class="navbar-text navbar-left">
@@ -42,7 +39,6 @@
 
                 <ul class="nav navbar-nav">
                     @dropdown("Characters") {
-                        <li><a href="@controllers.character.routes.CharacterController.list">Characters</a></li>
                         <li><a href="@controllers.character.routes.ClassController.list">Classes</a></li>
                     }
 
