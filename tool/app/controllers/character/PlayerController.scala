@@ -11,5 +11,7 @@ class PlayerController @Inject() (context: ServiceContext) extends Controller {
 
   val list = Action(_ => Ok(html.character.PlayerController.list(service.players.get)))
 
-  val create = Action(_ => Ok(""))
+  val newPlayer = Action(_ => Ok(html.character.PlayerController.newPlayer()))
+
+  val create = TODO
 }

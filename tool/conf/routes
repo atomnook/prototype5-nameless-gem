@@ -11,7 +11,9 @@ DELETE /characters/classes/:id.json   controllers.character.ClassController.dele
 
 # /characters/players
 GET /characters/players   controllers.character.PlayerController.list
-GET /characters/players/new   controllers.character.PlayerController.create
+GET /characters/new-players   controllers.character.PlayerController.newPlayer
+
+POST /characters/players    controllers.character.PlayerController.create
 
 # /items/equipments
 GET /items/equipments   controllers.item.EquipmentController.list

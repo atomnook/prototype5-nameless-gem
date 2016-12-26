@@ -1,0 +1,23 @@
+@()
+
+@Pages.main {
+    @Pages.row1 {
+        @Components.text(id = "id", getter = "idValue", placeholder = "player id")
+    }
+
+    @Pages.row1 {
+        @Components.text(id = "name", getter = "nameValue", placeholder = "player name")
+    }
+
+    @Pages.row1 {
+        <div class="media">
+            <div class="media-left">
+                <img class="media-object" width="64" height="64" src="@routes.Assets.at("images/favicn.ico")">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">tmp</h4>
+                <br>
+            </div>
+        </div>
+    }
+}
